@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="算法,排序">
+
+
+    <meta name="description" content="java算法基础之常用排序算法1.冒泡排序冒泡排序算法的基本思路为：依次比较相邻两数，如果两数的顺序错误，就交换两个数的位置，直到比较完所有的数，则排序完成，java实现的代码如下所示：
+pub...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>java算法基础之常用排序算法 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="java算法基础之常用排序算法">
+            
+	            java算法基础之常用排序算法
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/排序/">排序</a> <a class="tag-link" href="/tags/算法/">算法</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/08/20</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>967</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="java算法基础之常用排序算法"><a href="#java算法基础之常用排序算法" class="headerlink" title="java算法基础之常用排序算法"></a>java算法基础之常用排序算法</h1><h2 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h2><p>冒泡排序算法的基本思路为：依次比较相邻两数，如果两数的顺序错误，就交换两个数的位置，直到比较完所有的数，则排序完成，java实现的代码如下所示：</p>
+<pre><code>public static void bubbleSort(int[] array){
+        for (int i = array.length-1;i &gt;0;i--){
+            for (int j = 0;j &lt; i;j++){
+                if (array[j] &gt;array[j+1]){
+                    int tmp;
+                    tmp = array[j];
+                    array[j] = array[j+1];
+                    array[j+1] = tmp;
+                }
+            }
+        }
+    }
+</code></pre><p>算法提示：在交换位置之前加入的布尔类型的变量exchangeflag作为标志位，如果在一轮比较中没有发生交换，则说明排序完成，无需继续进行循环。</p>
+<h3 id="时间复杂度问题"><a href="#时间复杂度问题" class="headerlink" title="时间复杂度问题"></a>时间复杂度问题</h3><ol>
+<li>冒泡排序算法最好的时间复杂度是O(n)</li>
+<li>冒泡排序算法最坏的时间复杂度是O(n^2)</li>
+<li>冒泡算法的平均时间复杂度是O(n^2)</li>
+</ol>
+<h3 id="2-选择排序算法"><a href="#2-选择排序算法" class="headerlink" title="2.选择排序算法"></a>2.选择排序算法</h3><p>选择排序算法的基本思路为：从被排序数组中找出最小的一个数放在数组的第一位，接着从剩下的数中选出最小的放在第二位，如此反复，直到排到第N-1位，排序结束</p>
+<p>算法如下：</p>
+<pre><code>public static void selectSort(int[] array){
+        for (int i = 0;i &lt; array.length-1;i++){
+            for (int j = i+1;j &lt; array.length;j++){
+                if (array[i] &lt;array[j]){
+                    int tmp;
+                    tmp = array[i];
+                    array[i] = array[j];
+                    array[j] = tmp;
+                }
+            }
+        }
+    }
+</code></pre><h3 id="3-插入排序算法"><a href="#3-插入排序算法" class="headerlink" title="3.插入排序算法"></a>3.插入排序算法</h3><p>插入排序算法的基本思路为：选择第一位数为已排序数，取出下一位未排序的数，从后往前扫描，如果被扫描的数大于该未排序数，则两数交换位置，然后接着扫描，直到找到已排序的数小于或等于该未排序数，则将该新元素插入到这个位置。接着取出下一位未排序数，重复以上操作，知道所有数完成排序。</p>
+<p>算法如下：</p>
+<pre><code>public static void insertSort(int [] array){
+        int temp;
+        for (int i =1;i &lt; array.length;i++){
+            for (int j = i;j &gt;0;j--){
+                if (array[j] &lt; array[j-1]){
+                    temp = array[j];
+                    array[j] = array[j-1];
+                    array[j-1] = temp;
+                }else {
+                    break;
+                }
+            }
+        }
+    }
+</code></pre>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2016/09/12/JavaScript基础知识整理/" class="pre-post btn btn-default" title="JavaScript基础知识整理">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">JavaScript基础知识整理</span>
+        </a>
+    
+    
+        <a href="/2016/08/07/hibernate学习相关总结和问题解决/" class="next-post btn btn-default" title="hibernate学习相关总结和问题解决">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">hibernate学习相关总结和问题解决</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java算法基础之常用排序算法"><span class="toc-text">java算法基础之常用排序算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-冒泡排序"><span class="toc-text">1.冒泡排序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#时间复杂度问题"><span class="toc-text">时间复杂度问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-选择排序算法"><span class="toc-text">2.选择排序算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-插入排序算法"><span class="toc-text">3.插入排序算法</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

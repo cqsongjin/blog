@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="Java,框架,ORM">
+
+
+    <meta name="description" content="hibernate学习相关总结和问题解决常见问题hibernate不自动建表问题配置了&lt;property name=&quot;hibernate.hbm2ddl.auto&quot;&g...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>hibernate学习相关总结和问题解决 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="hibernate学习相关总结和问题解决">
+            
+	            hibernate学习相关总结和问题解决
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/hibernate/">hibernate</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Java/">Java</a> <a class="tag-link" href="/tags/ORM/">ORM</a> <a class="tag-link" href="/tags/框架/">框架</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/08/07</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>980</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="hibernate学习相关总结和问题解决"><a href="#hibernate学习相关总结和问题解决" class="headerlink" title="hibernate学习相关总结和问题解决"></a>hibernate学习相关总结和问题解决</h2><h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="hibernate不自动建表问题"><a href="#hibernate不自动建表问题" class="headerlink" title="hibernate不自动建表问题"></a>hibernate不自动建表问题</h3><p>配置了<code>&lt;property name=&quot;hibernate.hbm2ddl.auto&quot;&gt;update&lt;/property&gt;</code>之后，在数据库中不存在相应的数据表的时候，仍然无法自动创建表，可以查看是否是数据库方言的问题，</p>
+<p>出错原因：原代码 <code>&lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQLInnoDBDialect&lt;/property&gt;</code>在mysql5.5以上版本，配置方言的时候mysql默认存储引擎为InnoDB，需创建新表（表名不存在），数据库方言只能选择MySQLDialect；</p>
+<p>修改方案：修改配置为<code>&lt;property name=&quot;dialect&quot;&gt;org.hibernate.dialect.MySQL5InnoDBDialect&lt;/property&gt;</code>（推荐）</p>
+<p>或者<code>&lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQDialect&lt;/property&gt;</code></p>
+<h3 id="配置文件模板记录"><a href="#配置文件模板记录" class="headerlink" title="配置文件模板记录"></a>配置文件模板记录</h3><pre><code>&lt;?xml version=&apos;1.0&apos; encoding=&apos;utf-8&apos;?&gt;
+&lt;!DOCTYPE hibernate-configuration PUBLIC
+        &quot;-//Hibernate/Hibernate Configuration DTD 3.0//EN&quot;
+        &quot;http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;
+
+&lt;hibernate-configuration&gt;
+
+    &lt;session-factory&gt;
+
+        &lt;!-- Database connection settings --&gt;
+        &lt;property name=&quot;connection.driver_class&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+        &lt;property name=&quot;connection.url&quot;&gt;jdbc:mysql://localhost:3306/baron&lt;/property&gt;
+        &lt;property name=&quot;connection.username&quot;&gt;root&lt;/property&gt;
+        &lt;property name=&quot;connection.password&quot;&gt;songjin&lt;/property&gt;
+
+        &lt;!-- JDBC connection pool (use the built-in) --&gt;
+        &lt;property name=&quot;connection.pool_size&quot;&gt;1&lt;/property&gt;
+
+        &lt;!-- SQL dialect --&gt;
+        &lt;property name=&quot;dialect&quot;&gt;org.hibernate.dialect.MySQL5InnoDBDialect&lt;/property&gt;
+
+        &lt;!-- Enable Hibernate&apos;s automatic session context management --&gt;
+        &lt;property name=&quot;current_session_context_class&quot;&gt;thread&lt;/property&gt;
+
+        &lt;!-- Disable the second-level cache  --&gt;
+        &lt;!-- &lt;property name=&quot;cache.provider_class&quot;&gt;org.hibernate.cache.internal.NoCacheProvider&lt;/property&gt; --&gt;
+
+        &lt;!-- Echo all executed SQL to stdout --&gt;
+        &lt;property name=&quot;show_sql&quot;&gt;true&lt;/property&gt;
+
+        &lt;!-- Drop and re-create the database schema on startup --&gt;
+        &lt;property name=&quot;hbm2ddl.auto&quot;&gt;update&lt;/property&gt;
+        &lt;property name=&quot;hibernate.format_sql&quot;&gt;true&lt;/property&gt;
+        &lt;!-- &lt;mapping resource=&quot;org/hibernate/tutorial/domain/Event.hbm.xml&quot;/&gt; --&gt;
+        &lt;mapping resource=&quot;com/song/hb/model/user.hbm.xml&quot;/&gt;
+        &lt;mapping class=&quot;com.song.hb.model.Teacher&quot;/&gt;
+    &lt;/session-factory&gt;
+
+&lt;/hibernate-configuration&gt;
+</code></pre><h3 id="hibernate4获取SessionFactory的方式变化"><a href="#hibernate4获取SessionFactory的方式变化" class="headerlink" title="hibernate4获取SessionFactory的方式变化"></a>hibernate4获取SessionFactory的方式变化</h3><pre><code>Configuration configuration = new Configuration().configure();
+StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+</code></pre><h2 id="简单配置上手"><a href="#简单配置上手" class="headerlink" title="简单配置上手"></a>简单配置上手</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp2.BasicDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:driverClassName</span>=<span class="string">"com.mysql.jdbc.Driver"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:url</span>=<span class="string">"jdbc:mysql://localhost:3306/baron"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:username</span>=<span class="string">"root"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:password</span>=<span class="string">"songjin"</span></span></span><br><span class="line"><span class="tag">      /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sessionFactory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.LocalSessionFactoryBean"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:dataSource-ref</span>=<span class="string">"dataSource"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:packagesToScan</span>=<span class="string">"model"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernateProperties"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">      hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect</span><br><span class="line">      hibernate.show_sql=true</span><br><span class="line">      hbm2ddl.auto=update</span><br><span class="line">      hibernate.format_sql=true</span><br><span class="line">      hibernate.connection.autocommit=true</span><br><span class="line">    <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.HibernateTransactionManager"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:sessionFactory-ref</span>=<span class="string">"sessionFactory"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jdbcTemplate"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.core.JdbcTemplate"</span> <span class="attr">c:dataSource-ref</span>=<span class="string">"dataSource"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="与Spring整合相关问题"><a href="#与Spring整合相关问题" class="headerlink" title="与Spring整合相关问题"></a>与Spring整合相关问题</h2><h3 id="简单整合"><a href="#简单整合" class="headerlink" title="简单整合"></a>简单整合</h3><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><h4 id="事务管理在测试方法中自动回滚"><a href="#事务管理在测试方法中自动回滚" class="headerlink" title="事务管理在测试方法中自动回滚"></a>事务管理在测试方法中自动回滚</h4>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2016/08/20/java算法基础之常用排序算法/" class="pre-post btn btn-default" title="java算法基础之常用排序算法">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">java算法基础之常用排序算法</span>
+        </a>
+    
+    
+        <a href="/2016/06/25/Spring之MVC/" class="next-post btn btn-default" title="Spring之MVC">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Spring之MVC</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#hibernate学习相关总结和问题解决"><span class="toc-text">hibernate学习相关总结和问题解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见问题"><span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hibernate不自动建表问题"><span class="toc-text">hibernate不自动建表问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置文件模板记录"><span class="toc-text">配置文件模板记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hibernate4获取SessionFactory的方式变化"><span class="toc-text">hibernate4获取SessionFactory的方式变化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单配置上手"><span class="toc-text">简单配置上手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与Spring整合相关问题"><span class="toc-text">与Spring整合相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单整合"><span class="toc-text">简单整合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#事务管理在测试方法中自动回滚"><span class="toc-text">事务管理在测试方法中自动回滚</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="Java,框架">
+
+
+    <meta name="description" content="Struts2配置文件相关标签及其属性constantpackage:用法和java的包类似，用于区分同名的action
+name：包名
+extends：继承的包名，一般默认为“struts-d...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>Struts2配置文件相关标签及其属性 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Struts2配置文件相关标签及其属性">
+            
+	            Struts2配置文件相关标签及其属性
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Java/">Java</a> <a class="tag-link" href="/tags/框架/">框架</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/05/10</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>1069</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Struts2配置文件相关标签及其属性"><a href="#Struts2配置文件相关标签及其属性" class="headerlink" title="Struts2配置文件相关标签及其属性"></a>Struts2配置文件相关标签及其属性<struts></struts></h1><h2 id="constant"><a href="#constant" class="headerlink" title="constant"></a>constant</h2><h2 id="package-用法和java的包类似，用于区分同名的action"><a href="#package-用法和java的包类似，用于区分同名的action" class="headerlink" title="package:用法和java的包类似，用于区分同名的action"></a>package:用法和java的包类似，用于区分同名的action</h2><ol>
+<li>name：包名</li>
+<li>extends：继承的包名，一般默认为“struts-default”</li>
+<li>namespace：指定名称空间，也就是访问此包下的Action需要访问的路径</li>
+<li>abstract：将包声明为抽象类型（即包中不包括action）</li>
+</ol>
+<h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><p>###action直接继承actionsupport类，主要实现execute（）方法路径访问先找filter，之后寻找struts配置文件中相应的namespace，如果无，法找到相应的namespace，则返回web.xml执行相应操作，如果找到了，则寻找对应的action，根据执行action后返回的String字符串，在result标签中找到对应的result视图执行</p>
+<ol>
+<li>name：用于配置Action对象被请求的URL映射</li>
+<li>class：指定Action对象的类名</li>
+<li>method：设置请求Action对象时，调用Action对象的哪一个方法,通过method指定来实现方法调用会产生大量action实例，浪费资源，所以一般不推荐使用。一般使用动态方法调用DMI</li>
+<li>converter：指定Action对象类型转换器的类</li>
+</ol>
+<h2 id="result"><a href="#result" class="headerlink" title="result"></a>result</h2><h2 id="相关注意事项："><a href="#相关注意事项：" class="headerlink" title="相关注意事项："></a>相关注意事项：</h2>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2016/06/25/Spring之MVC/" class="pre-post btn btn-default" title="Spring之MVC">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Spring之MVC</span>
+        </a>
+    
+    
+        <a href="/2016/02/13/webserve_数据库操作/" class="next-post btn btn-default" title="JDBC进行数据库连接操作">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">JDBC进行数据库连接操作</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Struts2配置文件相关标签及其属性"><span class="toc-text">Struts2配置文件相关标签及其属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#constant"><span class="toc-text">constant</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#package-用法和java的包类似，用于区分同名的action"><span class="toc-text">package:用法和java的包类似，用于区分同名的action</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#action"><span class="toc-text">action</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#result"><span class="toc-text">result</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关注意事项："><span class="toc-text">相关注意事项：</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

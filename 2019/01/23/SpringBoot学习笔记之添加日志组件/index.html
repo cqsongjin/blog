@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="SpringBoot">
+
+
+    <meta name="description" content="SpringBoot学习笔记之添加日志组件前言上一节通过spring-security和jwt完成了简单的权限控制，在某些时候，我们需要记录某些用户的操作记录，或者对某些异常信息进行存储，这个时...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>SpringBoot学习笔记之添加日志组件 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SpringBoot学习笔记之添加日志组件">
+            
+	            SpringBoot学习笔记之添加日志组件
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/SpringBoot/">SpringBoot</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/01/23</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="SpringBoot学习笔记之添加日志组件"><a href="#SpringBoot学习笔记之添加日志组件" class="headerlink" title="SpringBoot学习笔记之添加日志组件"></a>SpringBoot学习笔记之添加日志组件</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一节通过spring-security和jwt完成了简单的权限控制，在某些时候，我们需要记录某些用户的操作记录，或者对某些异常信息进行存储，这个时候就需要用到日志框架。本文我们采用logback日志组件。Java领域有许多知名的日志组件，例如log4j或者log4j2等。本文采用logback日志组件主要有以下几个原因：</p>
+<ol>
+<li>logback性能优良</li>
+<li>spring-boot内置了logback组件，并提供了扩展支持</li>
+<li>logback天生与slf4j门面日志集成，不需要第三方库支持</li>
+</ol>
+<h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>在spring-boot项目下，我们不需要添加任何依赖，因为spring-boot默认使用logback，我们直接使用即可。</p>
+<h2 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h2><p>要使用logback配置文件，我们只需要在resources根目录下，创建一个<code>logback-spring.xml</code>文件，编辑内容如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="comment">&lt;!--scan：当scan被设置为true时，当配置文件发生改变，将会被重新加载，默认为true--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--scanPeriod：检测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认为毫秒，当scan=true时这个值生效，默认时间间隔为1分钟--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--debug：当被设置为true时，将打印出logback内部日志信息，实时查看logback运行信息，默认为false--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span> <span class="attr">scan</span>=<span class="string">"false"</span> <span class="attr">scanPeriod</span>=<span class="string">"60000"</span> <span class="attr">debug</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--appender是一个日志打印的组件，这里组件里面定义了打印过滤的条件、打印输出方式、滚动策略、编码方式、打印格式等等--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--name指定&lt;appender&gt;的名称--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--class指定&lt;appender&gt;的全限定名--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--appender主要有以下几种类型--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--ConsoleAppender：把日志添加到控制台--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--FileAppender：把日志添加到文件--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--RollingFileAppender：滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。它是FileAppender的子类--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"STDOUT"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--如果是 true，日志被追加到文件结尾，如果是false，清空现存文件，默认是true。--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;append&gt;true&lt;/append&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [%thread] %-5level %logger - %msg%n<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--为appender 添加一个或多个过滤器，可以用任意条件对日志进行过滤。appender 有多个过滤器时，按照配置顺序执行。--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;filter class="ch.qos.logback.classic.filter.ThresholdFilter"&gt;--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;level&gt;INFO&lt;/level&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;/filter&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;level&gt;WARN&lt;/level&gt;--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;onMismatch&gt;DENY&lt;/onMismatch&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;/filter&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"com.example.springbootdemo.hello"</span> <span class="attr">level</span>=<span class="string">"INFO"</span> <span class="attr">additivity</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"STDOUT"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">logger</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"com.example.springbootdemo"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span> <span class="attr">additivity</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"STDOUT"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">logger</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"INFO"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"STDOUT"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>接下来我们对配置文件中的内容进行说明：</p>
+<p>configuration是配置文件的根节点，主要有以下三个属性：</p>
+<ul>
+<li><p>scan：当scan被设置为true时，当配置文件发生改变，将会被重新加载，默认为true</p>
+</li>
+<li><p>scanPeriod：检测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认为毫秒，当scan=true时这个值生效，默认时间间隔为1分钟</p>
+</li>
+<li><p>debug：当被设置为true时，将打印出logback内部日志信息，实时查看logback运行信息，默认为false</p>
+</li>
+</ul>
+<h3 id="appender"><a href="#appender" class="headerlink" title="appender"></a>appender</h3><p>appender是一个日志打印的组件，这里组件里面定义了打印过滤的条件、打印输出方式、滚动策略、编码方式、打印格式等等。</p>
+<p>appender有如下几个属性：</p>
+<ul>
+<li>name指定<appender>的名称</appender></li>
+<li>class指定<appender>的全限定名</appender></li>
+</ul>
+<h4 id="append"><a href="#append" class="headerlink" title="append"></a>append</h4><p>append如果是 true，日志被追加到文件结尾，如果是false，清空现存文件，默认是true</p>
+<h4 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h4><p>表示输出，里面的pattern标签体内表示输出的格式。</p>
+<h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h4><p><encoder>是0.9.19版本之后引进的，以前的版本使用<layout>，logback极力推荐的是使用<encoder>而不是<layout>。常用的FileAppender和它的子类的期望是使用<encoder>而不再使用<layout>。</layout></encoder></layout></encoder></layout></encoder></p>
+<p>常用参数如下所示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>转换符</strong></th>
+<th><strong>作  用</strong></th>
+<th><strong>是否避免使用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c{length}lo{length}logger{length}</td>
+<td>输出日志的logger名称，可有一个整型参数来缩短<logger>名称，有几种情况：1、不输入表示输出完整的<logger>名称2、输入0表示只输出<logger>最右边点号之后的字符串3、输入其他数字表示输出小数点最后边点号之前的字符数量</logger></logger></logger></td>
+<td>否</td>
+</tr>
+<tr>
+<td>C{length}class{length}</td>
+<td>输出指定记录的请求的调用者的全限定名，length同上</td>
+<td>是</td>
+</tr>
+<tr>
+<td>d{pattern}date{pattern}</td>
+<td>输出时间格式，模式语法同java.text.SimpleDateFormat兼容</td>
+<td>否</td>
+</tr>
+<tr>
+<td>caller{depth}</td>
+<td>输出生成日志的调用者的位置信息，整数选项表示输出信息深度</td>
+<td>否</td>
+</tr>
+<tr>
+<td>L</td>
+<td>输出执行日志的请求行号</td>
+<td>是</td>
+</tr>
+<tr>
+<td>mmsgmessage</td>
+<td>输出应用程序提供的信息</td>
+<td>否</td>
+</tr>
+<tr>
+<td>m</td>
+<td>输入执行日志请求的方法名</td>
+<td>是</td>
+</tr>
+<tr>
+<td>n</td>
+<td>输出平台相关的分行符”\n”或者”\r\n”，即换行</td>
+<td>否</td>
+</tr>
+<tr>
+<td>plelevel</td>
+<td>输出日志级别</td>
+<td>否</td>
+</tr>
+<tr>
+<td>rrelative</td>
+<td>输出从程序启动到创建日志记录的时间，单位为毫秒</td>
+<td>否</td>
+</tr>
+<tr>
+<td>tthread</td>
+<td>输出产生日志的线程名称</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4><p>filter表示过滤器，在输出到appender之后的日志，再次进行一次过滤。常用的Filter有ch.qos.logback.classic.filter.LevelFilter和ch.qos.logback.classic.filter.ThresholdFilter。</p>
+<ol>
+<li>LevelFilter</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.classic.filter.LevelFilter"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">level</span>&gt;</span>WARN<span class="tag">&lt;/<span class="name">level</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">onMatch</span>&gt;</span>ACCEPT<span class="tag">&lt;/<span class="name">onMatch</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">onMismatch</span>&gt;</span>DENY<span class="tag">&lt;/<span class="name">onMismatch</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>匹配WARN则通过，不匹配则拒绝，所以只会打印WARN级别的日志</p>
+<ol start="2">
+<li>ThresholdFilter</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.classic.filter.ThresholdFilter"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">level</span>&gt;</span>INFO<span class="tag">&lt;/<span class="name">level</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>高于（或等于）INFO则通过，低于INFO则拒绝</p>
+<h3 id="logger"><a href="#logger" class="headerlink" title="logger"></a>logger</h3><p><logger>用来设置某一个包或者具体某一个类的日志打印级别、以及指定<appender>。<logger>可以包含零个或者多个<appender-ref>元素，标识这个appender将会添加到这个logger。<logger>仅有一个name属性、一个可选的level属性和一个可选的additivity属性：</logger></appender-ref></logger></appender></logger></p>
+<ul>
+<li>name：用来指定受此logger约束的某一个包或者具体的某一个类</li>
+<li>level：用来设置打印级别，五个常用打印级别从低至高依次为TRACE、DEBUG、INFO、WARN、ERROR，如果未设置此级别，那么当前logger会继承上级的级别</li>
+<li>additivity：是否向上级logger传递打印信息，默认为true</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"java.lang"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"STDOUT"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">logger</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="root"><a href="#root" class="headerlink" title="root"></a>root</h3><p><root>也是<logger>元素，但是它是根logger，只有一个level属性，因为它的name就是ROOT</logger></root></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"INFO"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"STDOUT"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>凡是没有声明匹配规则的包或者类，都使用ROOT指定的规则</p>
+<h2 id="编写实现"><a href="#编写实现" class="headerlink" title="编写实现"></a>编写实现</h2><p>简单起见，我们在之前的UserController中，添加日志组件，并测试日志是否按照我们的要求进行打印。</p>
+<p>修改<code>UserController</code>类的内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.user.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.config.security.Role;</span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.hello.controller.HelloController;</span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.user.entity.User;</span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.user.service.UserService;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpStatus;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.ResponseEntity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.access.prepost.PreAuthorize;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.net.URISyntaxException;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/api"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(UserController.class);</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/users"</span>)</span><br><span class="line">    <span class="meta">@PreAuthorize</span>(<span class="string">"hasRole(\""</span> + Role.ADMIN + <span class="string">"\")"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;User&gt; <span class="title">createUser</span><span class="params">(@RequestBody User user)</span> <span class="keyword">throws</span> URISyntaxException </span>&#123;</span><br><span class="line">        LOGGER.debug(<span class="string">"执行创建用户方法"</span>);</span><br><span class="line">        User result = userService.createUser(user);</span><br><span class="line">        <span class="keyword">return</span> ResponseEntity.created(<span class="keyword">new</span> URI(<span class="string">"/api/users/"</span> + result.getUserId()))</span><br><span class="line">                .body(result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/users/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="meta">@PreAuthorize</span>(<span class="string">"hasRole(\""</span> + Role.USER + <span class="string">"\")"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;User&gt; <span class="title">getUser</span><span class="params">(@PathVariable Long id)</span> </span>&#123;</span><br><span class="line">        LOGGER.debug(<span class="string">"执行获取单个用户方法"</span>);</span><br><span class="line">        User result = userService.getUser(id);</span><br><span class="line">        <span class="keyword">if</span> (result != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ResponseEntity.ok()</span><br><span class="line">                    .body(result);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/users"</span>)</span><br><span class="line">    <span class="meta">@PreAuthorize</span>(<span class="string">"hasRole(\""</span> + Role.ADMIN + <span class="string">"\")"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getAllUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        LOGGER.debug(<span class="string">"执行获取所有用户方法"</span>);</span><br><span class="line">        <span class="keyword">return</span> userService.getAllUser();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改<code>HelloController</code>类的内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.hello.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.ImmutableMap;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(HelloController.class);</span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/hello"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        LOGGER.debug(<span class="string">"发起hello请求"</span>);</span><br><span class="line">        <span class="keyword">return</span> ImmutableMap.of(</span><br><span class="line">                <span class="string">"result"</span>, <span class="keyword">true</span>,</span><br><span class="line">                <span class="string">"message"</span>, <span class="string">"hello world"</span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行程序，执行的登陆认证并访问路径<code>/api/users/1</code>，会在控制台得到如下消息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2019-03-01 16:30:13.956 [http-nio-8080-exec-2] DEBUG com.example.springbootdemo.user.controller.UserController - 执行获取单个用户方法</span><br></pre></td></tr></table></figure>
+<p>访问路径<code>/hello</code>，没有任何日志信息打印，因为配置文件中，hello包下的日志输出等级为INFO，DEBUG低于INFO，所以不会打印日志。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本节在resources目录下创建了<code>logback-spring.xml</code>配置文件，为项目中的HelloController和UserController添加了日志打印功能，并通过配置，实现了不同等级的输出限制。</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/02/12/SpringBoot学习之使用自己指定的日志框架/" class="pre-post btn btn-default" title="SpringBoot学习之使用自己指定的日志框架">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">SpringBoot学习之使用自己指定的日志框架</span>
+        </a>
+    
+    
+        <a href="/2019/01/20/SpringBoot学习笔记之使用security和jwt实现简单鉴权/" class="next-post btn btn-default" title="SpringBoot学习笔记之使用security和jwt实现简单健全">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">SpringBoot学习笔记之使用security和jwt实现简单健全</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot学习笔记之添加日志组件"><span class="toc-text">SpringBoot学习笔记之添加日志组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加依赖"><span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目配置"><span class="toc-text">项目配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#appender"><span class="toc-text">appender</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#append"><span class="toc-text">append</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#layout"><span class="toc-text">layout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#encoder"><span class="toc-text">encoder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#filter"><span class="toc-text">filter</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#logger"><span class="toc-text">logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#root"><span class="toc-text">root</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写实现"><span class="toc-text">编写实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

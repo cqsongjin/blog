@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="SpringBoot">
+
+
+    <meta name="description" content="SpringBoot学习笔记之使用security和jwt实现简单健全前言上一节通过集成mybatis-plus实现了简单增删改查的demo，本节将继续在上一节基础上，为每一个增删改查的操作添加...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>SpringBoot学习笔记之使用security和jwt实现简单健全 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SpringBoot学习笔记之使用security和jwt实现简单健全">
+            
+	            SpringBoot学习笔记之使用security和jwt实现简单健全
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/SpringBoot/">SpringBoot</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/01/20</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="SpringBoot学习笔记之使用security和jwt实现简单健全"><a href="#SpringBoot学习笔记之使用security和jwt实现简单健全" class="headerlink" title="SpringBoot学习笔记之使用security和jwt实现简单健全"></a>SpringBoot学习笔记之使用security和jwt实现简单健全</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一节通过集成mybatis-plus实现了简单增删改查的demo，本节将继续在上一节基础上，为每一个增删改查的操作添加权限控制，普通用户能够执行单挑查询操作以及公共接口的访问，但是对于用户的添加修改操作，则只有管理员有对应的权限，本节将完成这部分功能。</p>
+<p>spring-security不经行过多介绍，既然使用了springboot全家桶，在安全控制方面，首选spring-security进行集成。</p>
+<p>核心的用户验证功能使用<code>jwt(Json Web Token)</code>技术。jwt的主要执行流程如下：</p>
+<blockquote>
+<ol>
+<li>客户端发起登陆请求，将用户名和密码信息传输到服务器</li>
+<li>服务器接收客户端的用户名密码，并在后台进行比对，如果认证通过，则将用户信息以及角色权限信息写入到jwt证书，并设置合理的有效期。如果认证为通过，直接返回403状态</li>
+<li>客户端获取到服务端发送的jwt证书，一般情况下为一串加密后的字符串。并在以后的每一次请求中，在请求消息头的Authorization字段中，填入jwt证书字符串</li>
+<li>后台服务器根据配置，拦截需要权限的URL请求，并解析消息中的证书，如果用户证书有效且满足角色或者权限条件，则调用对应请求，如果证书无效或角色权限不满足，则返回403状态码。</li>
+</ol>
+</blockquote>
+<h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>在<code>build.gradle</code>文件内，添加对应的依赖，代码如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation <span class="string">'org.springframework.boot:spring-boot-starter-web'</span></span><br><span class="line">    <span class="comment">//spring安全组件</span></span><br><span class="line">    implementation <span class="string">'org.springframework.boot:spring-boot-starter-security'</span></span><br><span class="line">    implementation <span class="string">'com.baomidou:mybatis-plus-boot-starter:3.1.0'</span></span><br><span class="line">    implementation <span class="string">'org.projectlombok:lombok:1.18.4'</span></span><br><span class="line">    implementation <span class="string">'com.google.guava:guava:27.0.1-jre'</span></span><br><span class="line">    implementation <span class="string">'com.h2database:h2:1.4.197'</span></span><br><span class="line">    <span class="comment">//jwt库</span></span><br><span class="line">    implementation <span class="string">'io.jsonwebtoken:jjwt:0.9.1'</span></span><br><span class="line">    <span class="comment">//json库</span></span><br><span class="line">    implementation <span class="string">'org.json:json:20180813'</span></span><br><span class="line">    testImplementation <span class="string">'org.springframework.boot:spring-boot-starter-test'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中添加了mybatis-plus的starter依赖，以及后面会用到的Lombok工具，极大提升代码整洁。</p>
+<h2 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h2><p>我们使用一个独立的JavaConfig配置文件来对安全部分进行配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.config.security.CustomAuthenticationProvider;</span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.config.security.JWTAuthenticationFilter;</span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.config.security.JWTLoginFilter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationProvider;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;</span><br><span class="line"><span class="comment">//声明该类是一个配置类，类似于之前的spring xml配置文件</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//该注解启动spring的security配置</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="comment">//判断用户对某个控制层的方法是否具有访问权限,prePostEnabled表示使用表达式时间方法级别的安全性 4个注解可用</span></span><br><span class="line"><span class="comment">//@PreAuthorize 在方法调用之前,基于表达式的计算结果来限制对方法的访问</span></span><br><span class="line"><span class="comment">//@PostAuthorize 允许方法调用,但是如果表达式计算结果为false,将抛出一个安全性异常</span></span><br><span class="line"><span class="comment">//@PostFilter 允许方法调用,但必须按照表达式来过滤方法的结果</span></span><br><span class="line"><span class="comment">//@PreFilter 允许方法调用,但必须在进入方法之前过滤输入值</span></span><br><span class="line"><span class="comment">//securedEnabled 开启@Secured 注解过滤权限</span></span><br><span class="line"><span class="meta">@EnableGlobalMethodSecurity</span>(prePostEnabled = <span class="keyword">true</span>, securedEnabled = <span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 关闭csrf验证</span></span><br><span class="line">        http.csrf().disable()</span><br><span class="line">                <span class="comment">// 对请求进行认证</span></span><br><span class="line">                .authorizeRequests()</span><br><span class="line">                <span class="comment">// 所有 / 的所有请求 都放行</span></span><br><span class="line">                .antMatchers(<span class="string">"/"</span>).permitAll()</span><br><span class="line">                <span class="comment">// 所有 /login 的POST请求 都放行</span></span><br><span class="line">                .antMatchers(HttpMethod.POST, <span class="string">"/login"</span>).permitAll()</span><br><span class="line">                <span class="comment">//对于某些路径不需要任何权限，可以直接放行</span></span><br><span class="line">                .antMatchers(<span class="string">"/hello"</span>).permitAll()</span><br><span class="line">                <span class="comment">// 所有请求需要身份认证</span></span><br><span class="line">                .anyRequest().authenticated()</span><br><span class="line">                .and()</span><br><span class="line">                <span class="comment">// 添加一个过滤器 所有访问 /login 的请求交给 JWTLoginFilter 来处理 这个类处理所有的JWT相关内容</span></span><br><span class="line">                .addFilterBefore(<span class="keyword">new</span> JWTLoginFilter(<span class="string">"/login"</span>, authenticationManager()),</span><br><span class="line">                        UsernamePasswordAuthenticationFilter.class)</span><br><span class="line">                <span class="comment">// 添加一个过滤器验证其他请求的Token是否合法</span></span><br><span class="line">                .addFilterBefore(<span class="keyword">new</span> JWTAuthenticationFilter(),</span><br><span class="line">                        UsernamePasswordAuthenticationFilter.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 使用自定义身份验证组件</span></span><br><span class="line">        auth.authenticationProvider(customAuthenticationProvider());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//声明自定义的认证功能类</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AuthenticationProvider <span class="title">customAuthenticationProvider</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CustomAuthenticationProvider();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在跟包下面的主配置类，会像寻找带有注解的bean一样，寻找带有<code>@Configuration</code>注解的配置类，并自动将其配置导入进来，以上配置类启动了spring-security安全框架，并声明了一些过滤器，用于使用jwt鉴权功能。其中使用到的某些类我们会在编写实现部分来实现对应的类。</p>
+<p>上一节我们定义了一个简单的user表，里面初始化了一些用户，我们可以继续复用这张表，用来作为我们的登陆用户表，其中需要扩展一个password字段，用来存储用户的密码，简单起见，此处密码使用明文存储，在生产环境，需要进一步加密确保安全性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.user.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.annotation.IdType;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.annotation.TableId;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="comment">//@Data注解为Lombok提供的注解，可以在编译期自动为类的字段生成getter和setter方法</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@TableId</span>(type = IdType.AUTO)</span><br><span class="line">    <span class="keyword">private</span> Long userId;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="keyword">user</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">user</span></span><br><span class="line">(</span><br><span class="line">	user_id <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT <span class="keyword">COMMENT</span> <span class="string">'主键ID'</span>,</span><br><span class="line">	<span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">30</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'姓名'</span>,</span><br><span class="line">	<span class="keyword">password</span> <span class="built_in">VARCHAR</span>(<span class="number">128</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'密码'</span>,</span><br><span class="line">	age <span class="built_in">INT</span>(<span class="number">11</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'年龄'</span>,</span><br><span class="line">	email <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'邮箱'</span>,</span><br><span class="line">	PRIMARY <span class="keyword">KEY</span> (user_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> <span class="keyword">user</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span> (user_id, <span class="keyword">name</span>, <span class="keyword">password</span>, age, email) <span class="keyword">VALUES</span></span><br><span class="line">(<span class="number">1</span>, <span class="string">'Jone'</span>, <span class="string">'123456'</span>, <span class="number">18</span>, <span class="string">'test1@baomidou.com'</span>),</span><br><span class="line">(<span class="number">2</span>, <span class="string">'Jack'</span>, <span class="string">'123456'</span>, <span class="number">20</span>, <span class="string">'test2@baomidou.com'</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="string">'Tom'</span>, <span class="string">'123456'</span>, <span class="number">28</span>, <span class="string">'test3@baomidou.com'</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="string">'Sandy'</span>, <span class="string">'123456'</span>, <span class="number">21</span>, <span class="string">'test4@baomidou.com'</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="string">'Billie'</span>, <span class="string">'123456'</span>, <span class="number">24</span>, <span class="string">'test5@baomidou.com'</span>);</span><br></pre></td></tr></table></figure>
+<p>至此，项目配置工作完成。</p>
+<h2 id="编写实现"><a href="#编写实现" class="headerlink" title="编写实现"></a>编写实现</h2><p>既然需要鉴权，我们就需要定义一个简单的类，声明我们需要用到的角色<code>Role.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.config.security;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Role</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ADMIN = <span class="string">"ROLE_ADMIN"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"ROLE_USER"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们需要创建一个工具类，用来生成jwt证书和解析jwt证书，里面定义了对应的两个方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.config.security.jwt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Claims;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Jwts;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.SignatureAlgorithm;</span><br><span class="line"><span class="keyword">import</span> org.json.JSONObject;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.UsernamePasswordAuthenticationToken;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.GrantedAuthority;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.authority.AuthorityUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenAuthenticationService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> EXPIRATIONTIME = <span class="number">432_000_000</span>;     <span class="comment">// 5天</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String SECRET = <span class="string">"P@ssw02d"</span>;            <span class="comment">// JWT密码</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String TOKEN_PREFIX = <span class="string">"Bearer"</span>;        <span class="comment">// Token前缀</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String HEADER_STRING = <span class="string">"Authorization"</span>;<span class="comment">// 存放Token的Header Key</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// JWT生成方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addAuthentication</span><span class="params">(HttpServletResponse response, String username, Collection&lt;? extends GrantedAuthority&gt; authorities)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String authoritiesStr = authorities.stream().map(GrantedAuthority::getAuthority).reduce((v1, v2) -&gt; v1 + <span class="string">","</span> + v2).get();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 生成JWT</span></span><br><span class="line">        String JWT = Jwts.builder()</span><br><span class="line">                <span class="comment">// 保存权限（角色）</span></span><br><span class="line">                .claim(<span class="string">"authorities"</span>, authoritiesStr)</span><br><span class="line">                <span class="comment">// 用户名写入标题</span></span><br><span class="line">                .setSubject(username)</span><br><span class="line">                <span class="comment">// 有效期设置</span></span><br><span class="line">                .setExpiration(<span class="keyword">new</span> Date(System.currentTimeMillis() + EXPIRATIONTIME))</span><br><span class="line">                <span class="comment">// 签名设置</span></span><br><span class="line">                .signWith(SignatureAlgorithm.HS512, SECRET)</span><br><span class="line">                .compact();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将 JWT 写入 body</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            response.setContentType(<span class="string">"application/json"</span>);</span><br><span class="line">            response.setStatus(HttpServletResponse.SC_OK);</span><br><span class="line">            response.getOutputStream().println(<span class="keyword">new</span> JSONObject() &#123;</span><br><span class="line">                &#123;</span><br><span class="line">                    put(<span class="string">"status"</span>, <span class="number">0</span>);</span><br><span class="line">                    put(<span class="string">"message"</span>, <span class="string">""</span>);</span><br><span class="line">                    put(<span class="string">"result"</span>, JWT);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;.toString());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// JWT验证方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Authentication <span class="title">getAuthentication</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 从Header中拿到token</span></span><br><span class="line">        String token = request.getHeader(HEADER_STRING);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (token != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 解析 Token</span></span><br><span class="line">            Claims claims = Jwts.parser()</span><br><span class="line">                    <span class="comment">// 验签</span></span><br><span class="line">                    .setSigningKey(SECRET)</span><br><span class="line">                    <span class="comment">// 去掉 Bearer</span></span><br><span class="line">                    .parseClaimsJws(token.replace(TOKEN_PREFIX, <span class="string">""</span>))</span><br><span class="line">                    .getBody();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 拿用户名</span></span><br><span class="line">            String user = claims.getSubject();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 得到 权限（角色）</span></span><br><span class="line">            List&lt;GrantedAuthority&gt; authorities = AuthorityUtils.commaSeparatedStringToAuthorityList((String) claims.get(<span class="string">"authorities"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 返回验证令牌</span></span><br><span class="line">            <span class="keyword">return</span> user != <span class="keyword">null</span> ?</span><br><span class="line">                    <span class="keyword">new</span> UsernamePasswordAuthenticationToken(user, <span class="keyword">null</span>, authorities) :</span><br><span class="line">                    <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在配置类中，我们声明了两个Filter类，分别用于处理登陆和其他请求，以下是两个类的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.config.security;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.config.security.jwt.TokenAuthenticationService;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"><span class="keyword">import</span> org.json.JSONObject;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationManager;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.UsernamePasswordAuthenticationToken;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.AuthenticationException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.util.matcher.AntPathRequestMatcher;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.FilterChain;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 处理登陆的过滤器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JWTLoginFilter</span> <span class="keyword">extends</span> <span class="title">AbstractAuthenticationProcessingFilter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">JWTLoginFilter</span><span class="params">(String url, AuthenticationManager authManager)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="keyword">new</span> AntPathRequestMatcher(url));</span><br><span class="line">        setAuthenticationManager(authManager);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 鉴权操作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> req</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> res</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> AuthenticationException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Authentication <span class="title">attemptAuthentication</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            HttpServletRequest req, HttpServletResponse res)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> AuthenticationException, IOException </span>&#123;</span><br><span class="line">        Map map = <span class="keyword">new</span> ObjectMapper().readValue(req.getInputStream(), Map.class);</span><br><span class="line">        <span class="comment">//获取请求的登陆名和密码</span></span><br><span class="line">        String username = (String) map.get(<span class="string">"username"</span>);</span><br><span class="line">        String password = (String) map.get(<span class="string">"password"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回一个验证令牌，此处会调用我们在配置文件中定义的CustomAuthenticationProvider类来处理鉴权</span></span><br><span class="line">        <span class="keyword">return</span> getAuthenticationManager().authenticate(<span class="keyword">new</span> UsernamePasswordAuthenticationToken(username, password));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 成功回调方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> req</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> res</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> chain</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> auth</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">successfulAuthentication</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            HttpServletRequest req,</span></span></span><br><span class="line"><span class="function"><span class="params">            HttpServletResponse res, FilterChain chain,</span></span></span><br><span class="line"><span class="function"><span class="params">            Authentication auth)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        TokenAuthenticationService.addAuthentication(res, auth.getName(), auth.getAuthorities());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 失败回调方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> failed</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ServletException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">unsuccessfulAuthentication</span><span class="params">(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">        response.setContentType(<span class="string">"application/json"</span>);</span><br><span class="line">        response.setStatus(HttpServletResponse.SC_OK);</span><br><span class="line">        JSONObject jsonObject = <span class="keyword">new</span> JSONObject()&#123;</span><br><span class="line">            &#123;</span><br><span class="line">                put(<span class="string">"status"</span>, <span class="number">500</span>);</span><br><span class="line">                put(<span class="string">"message"</span>, <span class="string">"Internal Server Error!!!"</span>);</span><br><span class="line">                put(<span class="string">"result"</span>, JSONObject.NULL);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        response.getOutputStream().println(jsonObject.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.config.security;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.config.security.jwt.TokenAuthenticationService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.context.SecurityContextHolder;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 除了登陆请求之外的其他请求会调用该过滤器鉴权</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JWTAuthenticationFilter</span> <span class="keyword">extends</span> <span class="title">GenericFilter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">                         ServletResponse response,</span></span></span><br><span class="line"><span class="function"><span class="params">                         FilterChain filterChain)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        Authentication authentication = TokenAuthenticationService</span><br><span class="line">                .getAuthentication((HttpServletRequest)request);</span><br><span class="line"></span><br><span class="line">        SecurityContextHolder.getContext()</span><br><span class="line">                .setAuthentication(authentication);</span><br><span class="line">        filterChain.doFilter(request,response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上两个类都是注册为过滤器，但是继承的过滤器类并不相同</p>
+<ul>
+<li>JWTLoginFilter类继承了AbstractAuthenticationProcessingFilter，该Filter已经实现了doFilter方法，并重新声明了几个回调方法，我们只需要实现对应的方法，即可完成一个简单的鉴权处理</li>
+<li>JWTAuthenticationFilter继承了GenericFilter，该类是为了简化Filter实现诞生了，我们只需要实现一个简单的doFilter方法即可，而无需关注Filter中需要实现的其他方法。</li>
+</ul>
+<p>现在，我们的权限验证部分的逻辑就全部完成了。然后再对控制层的请求方法进行权限注解，即可实现每个方法的权限控制。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootdemo.user.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.config.security.Role;</span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.user.entity.User;</span><br><span class="line"><span class="keyword">import</span> com.example.springbootdemo.user.service.UserService;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpStatus;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.ResponseEntity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.access.prepost.PreAuthorize;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.net.URISyntaxException;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/api"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(UserController.class);</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/users"</span>)</span><br><span class="line">    <span class="meta">@PreAuthorize</span>(<span class="string">"hasRole(\""</span> + Role.ADMIN + <span class="string">"\")"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;User&gt; <span class="title">createUser</span><span class="params">(@RequestBody User user)</span> <span class="keyword">throws</span> URISyntaxException </span>&#123;</span><br><span class="line">        User result = userService.createUser(user);</span><br><span class="line">        <span class="keyword">return</span> ResponseEntity.created(<span class="keyword">new</span> URI(<span class="string">"/api/users/"</span> + result.getUserId()))</span><br><span class="line">                .body(result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/users/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="meta">@PreAuthorize</span>(<span class="string">"hasRole(\""</span> + Role.USER + <span class="string">"\")"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;User&gt; <span class="title">getUser</span><span class="params">(@PathVariable Long id)</span> </span>&#123;</span><br><span class="line">        User result = userService.getUser(id);</span><br><span class="line">        <span class="keyword">if</span> (result != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ResponseEntity.ok()</span><br><span class="line">                    .body(result);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/users"</span>)</span><br><span class="line">    <span class="meta">@PreAuthorize</span>(<span class="string">"hasRole(\""</span> + Role.ADMIN + <span class="string">"\")"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getAllUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userService.getAllUser();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启服务，直接发起请求，会发现我们的请求都被拦截下来了，只有访问/hello时，仍然可以获取到期望的响应（因为我们将/hello路径从拦截路径中排除了）。</p>
+<p>其他请求只有在登陆之后才能在对应角色下获取到响应，否则只能看到如下类似的答复：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="string">"2019-02-28T07:44:28.035+0000"</span>,</span><br><span class="line">    <span class="attr">"status"</span>: <span class="number">403</span>,</span><br><span class="line">    <span class="attr">"error"</span>: <span class="string">"Forbidden"</span>,</span><br><span class="line">    <span class="attr">"message"</span>: <span class="string">"Forbidden"</span>,</span><br><span class="line">    <span class="attr">"path"</span>: <span class="string">"/api/users"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>补充概念：</p>
+<blockquote>
+<p>JWT和Bearer Token的關係<br>JWT在使用的時候要在token前面加上字符串「bearer」再填到HTTP請求的header里，這個值就是「Bearer Token」。為什麼要這麼做？它和JWT是什麼關係？</p>
+<p>簡單地說，JWT是一種token格式，Bearer Token是一種鑒權方案。</p>
+<p>HTTP的header項「Authorization」是在HTTP 1.0引入的，它的值的格式是類型+token，支持多種鑒權方案，bearer只是其中的一種。bearer方案中使用的token是JWT格式，這就是它們之間的關係。</p>
+</blockquote>
+<blockquote>
+<p>@PreAuthorize注解说明</p>
+<p>注解中可以使用el表达式，来声明需要的权限，其中有两个参数说明一下</p>
+<ul>
+<li>hasAuthority：判断是否具有对应的权限，待比较权限和比较字符串进行全匹配</li>
+<li>hasRole：判断是否具有对应的角色，如果比较字符串没有ROLE_开头，则加上ROLE_后进行比较</li>
+</ul>
+<p>对于GrantedAuthority接口实现类来说是不区分是Role还是Authority，二者区别就是如果是hasAuthority判断，就是判断整个字符串，判断hasRole时，系统自动加上ROLE_到判断的Role字符串上，也就是说hasRole(“CREATE”)和hasAuthority(‘ROLE_CREATE’)是相同的。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本节利用spring-security和jwt实现了简单的权限控制，核心就是创建了一个jwt生成证书和解析证书的工具类，注册了两个过滤器分别用于处理/login请求以及其他请求，同时注册了一个权限服务的provider类，用于验证用户名密码并返回对应的权限，以上组合即可实现一个普通的权限控制。</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/01/23/SpringBoot学习笔记之添加日志组件/" class="pre-post btn btn-default" title="SpringBoot学习笔记之添加日志组件">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">SpringBoot学习笔记之添加日志组件</span>
+        </a>
+    
+    
+        <a href="/2019/01/14/SpringBoot学习笔记之集成mybatis-plus实现持久化/" class="next-post btn btn-default" title="SpringBoot学习笔记之集成mybatis-plus实现持久化">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">SpringBoot学习笔记之集成mybatis-plus实现持久化</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot学习笔记之使用security和jwt实现简单健全"><span class="toc-text">SpringBoot学习笔记之使用security和jwt实现简单健全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加依赖"><span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目配置"><span class="toc-text">项目配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写实现"><span class="toc-text">编写实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

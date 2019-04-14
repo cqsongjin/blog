@@ -1,0 +1,289 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="grpc">
+
+
+    <meta name="description" content="grpc学习笔记之搭建简单grpc示例环境准备构建一个初始gradle项目，build.gradle配置文件如下
+1234567891011121314151617181920212223242...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>grpc学习笔记之搭建简单grpc示例 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="grpc学习笔记之搭建简单grpc示例">
+            
+	            grpc学习笔记之搭建简单grpc示例
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/grpc/">grpc</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/grpc/">grpc</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/12/18</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="grpc学习笔记之搭建简单grpc示例"><a href="#grpc学习笔记之搭建简单grpc示例" class="headerlink" title="grpc学习笔记之搭建简单grpc示例"></a>grpc学习笔记之搭建简单grpc示例</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>构建一个初始gradle项目，build.gradle配置文件如下</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * This file was generated by the Gradle 'init' task.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This generated file contains a sample Java project to get you started.</span></span><br><span class="line"><span class="comment"> * For more details take a look at the Java Quickstart chapter in the Gradle</span></span><br><span class="line"><span class="comment"> * user guide available at https://docs.gradle.org/5.1.1/userguide/tutorial_java_projects.html</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">plugins &#123;</span><br><span class="line">    <span class="comment">// Apply the java plugin to add support for Java</span></span><br><span class="line">    id <span class="string">'java'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Apply the application plugin to add support for building an application</span></span><br><span class="line">    id <span class="string">'application'</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">'com.google.protobuf'</span> version <span class="string">'0.8.5'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">repositories &#123;</span><br><span class="line">    <span class="comment">// Use jcenter for resolving your dependencies.</span></span><br><span class="line">    <span class="comment">// You can declare any Maven/Ivy/file repository here.</span></span><br><span class="line">    mavenLocal()</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sourceCompatibility = <span class="number">1.8</span></span><br><span class="line">targetCompatibility = <span class="number">1.8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> grpcVersion = <span class="string">'1.18.0'</span> <span class="comment">// CURRENT_GRPC_VERSION</span></span><br><span class="line"><span class="keyword">def</span> protobufVersion = <span class="string">'3.5.1'</span></span><br><span class="line"><span class="keyword">def</span> protocVersion = <span class="string">'3.5.1-1'</span></span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    <span class="comment">// This dependency is found on compile classpath of this component and consumers.</span></span><br><span class="line">    implementation <span class="string">'com.google.guava:guava:26.0-jre'</span></span><br><span class="line">    implementation <span class="string">"io.grpc:grpc-protobuf:$&#123;grpcVersion&#125;"</span></span><br><span class="line">    implementation <span class="string">"io.grpc:grpc-stub:$&#123;grpcVersion&#125;"</span></span><br><span class="line">    compileOnly <span class="string">"javax.annotation:javax.annotation-api:1.2"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// examples/advanced need this for JsonFormat</span></span><br><span class="line">    implementation <span class="string">"com.google.protobuf:protobuf-java-util:$&#123;protobufVersion&#125;"</span></span><br><span class="line"></span><br><span class="line">    runtimeOnly <span class="string">"io.grpc:grpc-netty-shaded:$&#123;grpcVersion&#125;"</span></span><br><span class="line"></span><br><span class="line">    testImplementation <span class="string">"io.grpc:grpc-testing:$&#123;grpcVersion&#125;"</span></span><br><span class="line">    testImplementation <span class="string">"junit:junit:4.12"</span></span><br><span class="line">    testImplementation <span class="string">"org.mockito:mockito-core:1.9.5"</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protobuf &#123;</span><br><span class="line">    protoc &#123; artifact = <span class="string">"com.google.protobuf:protoc:$&#123;protocVersion&#125;"</span> &#125;</span><br><span class="line">    plugins &#123;</span><br><span class="line">        grpc &#123; artifact = <span class="string">"io.grpc:protoc-gen-grpc-java:$&#123;grpcVersion&#125;"</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    generateProtoTasks &#123;</span><br><span class="line">        all()*.plugins &#123; grpc &#123;&#125; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Inform IDEs like IntelliJ IDEA, Eclipse or NetBeans about the generated code.</span></span><br><span class="line">sourceSets &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        java &#123;</span><br><span class="line">            srcDirs <span class="string">'build/generated/source/proto/main/grpc'</span></span><br><span class="line">            srcDirs <span class="string">'build/generated/source/proto/main/java'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">startScripts.enabled = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">task routeGuideServer(<span class="string">type:</span> CreateStartScripts) &#123;</span><br><span class="line">    mainClassName = <span class="string">'io.grpc.examples.routeguide.RouteGuideServer'</span></span><br><span class="line">    applicationName = <span class="string">'route-guide-server'</span></span><br><span class="line">    outputDir = <span class="keyword">new</span> File(project.buildDir, <span class="string">'tmp'</span>)</span><br><span class="line">    classpath = startScripts.classpath</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task routeGuideClient(<span class="string">type:</span> CreateStartScripts) &#123;</span><br><span class="line">    mainClassName = <span class="string">'io.grpc.examples.routeguide.RouteGuideClient'</span></span><br><span class="line">    applicationName = <span class="string">'route-guide-client'</span></span><br><span class="line">    outputDir = <span class="keyword">new</span> File(project.buildDir, <span class="string">'tmp'</span>)</span><br><span class="line">    classpath = startScripts.classpath</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task helloWorldServer(<span class="string">type:</span> CreateStartScripts) &#123;</span><br><span class="line">    mainClassName = <span class="string">'io.grpc.examples.helloworld.HelloWorldServer'</span></span><br><span class="line">    applicationName = <span class="string">'hello-world-server'</span></span><br><span class="line">    outputDir = <span class="keyword">new</span> File(project.buildDir, <span class="string">'tmp'</span>)</span><br><span class="line">    classpath = startScripts.classpath</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task helloWorldClient(<span class="string">type:</span> CreateStartScripts) &#123;</span><br><span class="line">    mainClassName = <span class="string">'io.grpc.examples.helloworld.HelloWorldClient'</span></span><br><span class="line">    applicationName = <span class="string">'hello-world-client'</span></span><br><span class="line">    outputDir = <span class="keyword">new</span> File(project.buildDir, <span class="string">'tmp'</span>)</span><br><span class="line">    classpath = startScripts.classpath</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task authServer(<span class="string">type:</span> CreateStartScripts) &#123;</span><br><span class="line">    mainClassName = <span class="string">'io.grpc.examples.authentication.AuthServer'</span></span><br><span class="line">    applicationName = <span class="string">'auth-server'</span></span><br><span class="line">    outputDir = <span class="keyword">new</span> File(project.buildDir, <span class="string">'tmp'</span>)</span><br><span class="line">    classpath = startScripts.classpath</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task authClient(<span class="string">type:</span> CreateStartScripts) &#123;</span><br><span class="line">    mainClassName = <span class="string">'io.grpc.examples.authentication.AuthClient'</span></span><br><span class="line">    applicationName = <span class="string">'auth-client'</span></span><br><span class="line">    outputDir = <span class="keyword">new</span> File(project.buildDir, <span class="string">'tmp'</span>)</span><br><span class="line">    classpath = startScripts.classpath</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task compressingHelloWorldClient(<span class="string">type:</span> CreateStartScripts) &#123;</span><br><span class="line">    mainClassName = <span class="string">'io.grpc.examples.experimental.CompressingHelloWorldClient'</span></span><br><span class="line">    applicationName = <span class="string">'compressing-hello-world-client'</span></span><br><span class="line">    outputDir = <span class="keyword">new</span> File(project.buildDir, <span class="string">'tmp'</span>)</span><br><span class="line">    classpath = startScripts.classpath</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">applicationDistribution.into(<span class="string">'bin'</span>) &#123;</span><br><span class="line">    from(routeGuideServer)</span><br><span class="line">    from(routeGuideClient)</span><br><span class="line">    from(helloWorldServer)</span><br><span class="line">    from(helloWorldClient)</span><br><span class="line">    from(authServer)</span><br><span class="line">    from(authClient)</span><br><span class="line">    from(compressingHelloWorldClient)</span><br><span class="line">    fileMode = <span class="number">0755</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Define the main class for the application</span></span><br><span class="line">mainClassName = <span class="string">'grpc_demo.App'</span></span><br></pre></td></tr></table></figure>
+<h2 id="定义一个proto文件"><a href="#定义一个proto文件" class="headerlink" title="定义一个proto文件"></a>定义一个proto文件</h2><p>在类加载路径下的proto文件夹下创建一个demo.proto文件，内容如下</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">option java_multiple_files = true;</span><br><span class="line">option java_package = &quot;com.cqsongjin.proto.demo&quot;;</span><br><span class="line">option java_outer_classname = &quot;DemoProto&quot;;</span><br><span class="line">option objc_class_prefix = &quot;SONG&quot;;</span><br><span class="line"></span><br><span class="line">package demo;</span><br><span class="line"></span><br><span class="line">//一个RPC服务</span><br><span class="line">service Worker &#123;</span><br><span class="line">  // 一个简单的RPC</span><br><span class="line">  rpc SayHello (HelloRequest) returns (HelloReply) &#123;&#125;;</span><br><span class="line">  //服务端流式RPC</span><br><span class="line">  rpc SayServerStream (HelloRequest) returns (stream HelloReply) &#123;&#125;</span><br><span class="line">  //客户端流式RPC</span><br><span class="line">  rpc SayClientStream (stream HelloRequest) returns (HelloReply) &#123;&#125;</span><br><span class="line">  //双向流式RPC</span><br><span class="line">  rpc SayDbStream (HelloRequest) returns (stream HelloReply) &#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//请求消息格式</span><br><span class="line">message HelloRequest &#123;</span><br><span class="line">  string name = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//响应消息格式</span><br><span class="line">message HelloReply &#123;</span><br><span class="line">  string message = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用proto插件自动生成RPC基础类，生成的类结构如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">├─generated</span><br><span class="line">│  └─source</span><br><span class="line">│      └─proto</span><br><span class="line">│          └─main</span><br><span class="line">│              ├─grpc</span><br><span class="line">│              │  └─com</span><br><span class="line">│              │      └─cqsongjin</span><br><span class="line">│              │          └─proto</span><br><span class="line">│              │              └─demo</span><br><span class="line">│              │                      WorkerGrpc.java</span><br><span class="line">│              │</span><br><span class="line">│              └─java</span><br><span class="line">│                  └─com</span><br><span class="line">│                      └─cqsongjin</span><br><span class="line">│                          └─proto</span><br><span class="line">│                              └─demo</span><br><span class="line">│                                      DemoProto.java</span><br><span class="line">│                                      HelloReply.java</span><br><span class="line">│                                      HelloReplyOrBuilder.java</span><br><span class="line">│                                      HelloRequest.java</span><br><span class="line">│                                      HelloRequestOrBuilder.java</span><br></pre></td></tr></table></figure>
+<p>生成类说明：</p>
+<ul>
+<li>待定</li>
+</ul>
+<h2 id="实现对应的RPC方法"><a href="#实现对应的RPC方法" class="headerlink" title="实现对应的RPC方法"></a>实现对应的RPC方法</h2><h3 id="实现服务端程序"><a href="#实现服务端程序" class="headerlink" title="实现服务端程序"></a>实现服务端程序</h3><p>通过继承WorkerGrpc里面的WorkerImplBase子类，并重写对应的RPC方法来实现对应的逻辑。代码如下：</p>
+<p><code>DemoImpl.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> grpc_demo.rpc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cqsongjin.proto.demo.HelloReply;</span><br><span class="line"><span class="keyword">import</span> com.cqsongjin.proto.demo.HelloRequest;</span><br><span class="line"><span class="keyword">import</span> com.cqsongjin.proto.demo.WorkerGrpc;</span><br><span class="line"><span class="keyword">import</span> io.grpc.stub.StreamObserver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoImpl</span> <span class="keyword">extends</span> <span class="title">WorkerGrpc</span>.<span class="title">WorkerImplBase</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(HelloRequest request, StreamObserver&lt;HelloReply&gt; responseObserver)</span> </span>&#123;</span><br><span class="line">        String name = request.getName();</span><br><span class="line">        System.out.println(name);</span><br><span class="line">        responseObserver.onNext(HelloReply.newBuilder().setMessage(<span class="string">"reply success:"</span> + name).build());</span><br><span class="line"><span class="comment">//        responseObserver.onNext(HelloReply.newBuilder().setMessage("reply success2:" + name).build());</span></span><br><span class="line">        responseObserver.onCompleted();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayServerStream</span><span class="params">(HelloRequest request, StreamObserver&lt;HelloReply&gt; responseObserver)</span> </span>&#123;</span><br><span class="line">        String name = request.getName();</span><br><span class="line">        System.out.println(name);</span><br><span class="line">        responseObserver.onNext(HelloReply.newBuilder().setMessage(<span class="string">"reply success:"</span> + name).build());</span><br><span class="line">        responseObserver.onNext(HelloReply.newBuilder().setMessage(<span class="string">"reply success2:"</span> + name).build());</span><br><span class="line">        responseObserver.onCompleted();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ServerApp.java</code>服务器程序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> grpc_demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> grpc_demo.rpc.DemoImpl;</span><br><span class="line"><span class="keyword">import</span> io.grpc.ServerBuilder;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerApp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">        ServerBuilder.forPort(<span class="number">58080</span>)</span><br><span class="line">                .addService(<span class="keyword">new</span> DemoImpl())</span><br><span class="line">                .build()</span><br><span class="line">                .start()</span><br><span class="line">                .awaitTermination();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现客户端程序"><a href="#实现客户端程序" class="headerlink" title="实现客户端程序"></a>实现客户端程序</h3><p><code>ClientApp.java</code>客户端程序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * This Java source file was generated by the Gradle 'init' task.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">package</span> grpc_demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cqsongjin.proto.demo.HelloReply;</span><br><span class="line"><span class="keyword">import</span> com.cqsongjin.proto.demo.HelloRequest;</span><br><span class="line"><span class="keyword">import</span> com.cqsongjin.proto.demo.WorkerGrpc;</span><br><span class="line"><span class="keyword">import</span> com.google.common.util.concurrent.ListenableFuture;</span><br><span class="line"><span class="keyword">import</span> io.grpc.ManagedChannel;</span><br><span class="line"><span class="keyword">import</span> io.grpc.ManagedChannelBuilder;</span><br><span class="line"><span class="keyword">import</span> io.grpc.stub.ClientCallStreamObserver;</span><br><span class="line"><span class="keyword">import</span> io.grpc.stub.ClientResponseObserver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CompletableFuture;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ExecutionException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientApp</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> CountDownLatch done = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</span><br><span class="line">        ManagedChannel channel = ManagedChannelBuilder.forAddress(<span class="string">"127.0.0.1"</span>, <span class="number">58080</span>)</span><br><span class="line">                .usePlaintext()</span><br><span class="line">                .build();</span><br><span class="line">        WorkerGrpc.WorkerBlockingStub blockingStub = WorkerGrpc.newBlockingStub(channel);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            String test = <span class="string">"test"</span> + i;</span><br><span class="line">            HelloReply helloReply = blockingStub.sayHello(HelloRequest.newBuilder().setName(test).build());</span><br><span class="line">            System.out.println(helloReply.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"--------------------"</span>);</span><br><span class="line">        WorkerGrpc.WorkerStub workerStub = WorkerGrpc.newStub(channel);</span><br><span class="line">        ClientResponseObserver&lt;HelloRequest, HelloReply&gt; clientResponseObserver = <span class="keyword">new</span> ClientResponseObserver&lt;HelloRequest, HelloReply&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeStart</span><span class="params">(ClientCallStreamObserver&lt;HelloRequest&gt; requestStream)</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"before"</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(HelloReply value)</span> </span>&#123;</span><br><span class="line">                System.out.println(value.getMessage());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">                t.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"complete"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            String test = <span class="string">"demo"</span> + i;</span><br><span class="line">            workerStub.sayServerStream(HelloRequest.newBuilder().setName(test).build(), clientResponseObserver);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"--------------------------"</span>);</span><br><span class="line">        WorkerGrpc.WorkerFutureStub futureStub = WorkerGrpc.newFutureStub(channel);</span><br><span class="line">        ListenableFuture&lt;HelloReply&gt; future = futureStub.sayHello(HelloRequest.newBuilder().setName(<span class="string">"one"</span>).build());</span><br><span class="line">        CompletableFuture.supplyAsync(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> future.get();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException | ExecutionException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).thenAccept(System.out::println);</span><br><span class="line">        done.await();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="运行效果"><a href="#运行效果" class="headerlink" title="运行效果"></a>运行效果</h3><p><code>server</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">test0</span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line">test3</span><br><span class="line">test4</span><br><span class="line">test5</span><br><span class="line">test6</span><br><span class="line">test7</span><br><span class="line">test8</span><br><span class="line">test9</span><br><span class="line">demo0</span><br><span class="line">demo1</span><br><span class="line">demo2</span><br><span class="line">demo9</span><br><span class="line">demo4</span><br><span class="line">demo7</span><br><span class="line">demo8</span><br><span class="line">demo5</span><br><span class="line">demo3</span><br><span class="line">one</span><br><span class="line">demo6</span><br></pre></td></tr></table></figure>
+<p><code>client</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">reply success:test0</span><br><span class="line">reply success:test1</span><br><span class="line">reply success:test2</span><br><span class="line">reply success:test3</span><br><span class="line">reply success:test4</span><br><span class="line">reply success:test5</span><br><span class="line">reply success:test6</span><br><span class="line">reply success:test7</span><br><span class="line">reply success:test8</span><br><span class="line">reply success:test9</span><br><span class="line">--------------------</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">before</span><br><span class="line">--------------------------</span><br><span class="line">reply success:demo0</span><br><span class="line">reply success:demo1</span><br><span class="line">reply success2:demo0</span><br><span class="line">complete</span><br><span class="line">reply success2:demo1</span><br><span class="line">complete</span><br><span class="line">reply success:demo2</span><br><span class="line">reply success:demo8</span><br><span class="line">reply success2:demo8</span><br><span class="line">complete</span><br><span class="line">reply success:demo4</span><br><span class="line">reply success2:demo4</span><br><span class="line">complete</span><br><span class="line">reply success:demo6</span><br><span class="line">reply success2:demo6</span><br><span class="line">complete</span><br><span class="line">reply success:demo5</span><br><span class="line">reply success:demo3</span><br><span class="line">reply success:demo7</span><br><span class="line">reply success2:demo5</span><br><span class="line">complete</span><br><span class="line">reply success2:demo3</span><br><span class="line">complete</span><br><span class="line">reply success2:demo7</span><br><span class="line">complete</span><br><span class="line">reply success:demo9</span><br><span class="line">reply success2:demo9</span><br><span class="line">complete</span><br><span class="line">reply success2:demo2</span><br><span class="line">complete</span><br><span class="line">message: &quot;reply success:one&quot;</span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/01/07/SpringBoot学习笔记之搭建一个简单的SpringWeb项目/" class="pre-post btn btn-default" title="SpringBoot学习笔记之搭建一个简单的SpringWeb项目">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">SpringBoot学习笔记之搭建一个简单的SpringWeb项目</span>
+        </a>
+    
+    
+        <a href="/2018/10/10/ZooKeeper学习笔记之搭建一个简单ZooKeeper集群/" class="next-post btn btn-default" title="ZooKeeper学习笔记之搭建一个简单ZooKeeper集群">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">ZooKeeper学习笔记之搭建一个简单ZooKeeper集群</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#grpc学习笔记之搭建简单grpc示例"><span class="toc-text">grpc学习笔记之搭建简单grpc示例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义一个proto文件"><span class="toc-text">定义一个proto文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现对应的RPC方法"><span class="toc-text">实现对应的RPC方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现服务端程序"><span class="toc-text">实现服务端程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现客户端程序"><span class="toc-text">实现客户端程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行效果"><span class="toc-text">运行效果</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

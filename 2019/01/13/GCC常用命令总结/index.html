@@ -1,0 +1,412 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="cpp">
+
+
+    <meta name="description" content="GCC常用命令总结
+将源文件预处理、编译、汇编并链接形成可执行文件，默认输入文件后缀为out，可使用-o命令修改输出文件名
+
+1gcc deno.c -o outfile_name
+
+仅作预处理...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>GCC常用命令总结 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="GCC常用命令总结">
+            
+	            GCC常用命令总结
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/cpp/">cpp</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/cpp/">cpp</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/01/13</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="GCC常用命令总结"><a href="#GCC常用命令总结" class="headerlink" title="GCC常用命令总结"></a>GCC常用命令总结</h1><ol>
+<li>将源文件预处理、编译、汇编并链接形成可执行文件，默认输入文件后缀为out，可使用-o命令修改输出文件名</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc deno.c -o outfile_name</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>仅作预处理、编译和汇编并生成目标文件(与源文件同名但后缀为.o)，不进行链接</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -c source.c -o target.o</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>编译静态连接库（多个目标文件的集合）</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ar crv libmylib.a my_print.o my_math.o</span><br><span class="line"></span><br><span class="line">上述命令中 crv 是 ar的命令选项：</span><br><span class="line">c 如果需要生成新的库文件，不要警告</span><br><span class="line">r 代替库中现有的文件或者插入新的文件</span><br><span class="line">v 输出详细信息</span><br></pre></td></tr></table></figure>
+<p>4.编译动态连接库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -fPIC -shared -o libdlllib.so dlllib.c</span><br><span class="line"></span><br><span class="line">-shared表示生成静态库</span><br><span class="line">-fPIC是编译选项，PIC是 Position Independent Code 的缩写，表示要生成位置无关的代码，这是动态库需要的特性</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th><strong>选项</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>命令示例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>将源文件预处理、编译、汇编并链接形成可执行文件</td>
+<td>[e.g.1]<em>gcc source.c</em>未指定输出文件时默认输出为a.out[e.g.2]<em>gcc source.c -o exec</em>将源文件source.c链接为可执行文件exec[e.g.3]<em>gcc test.o -o test</em>将编译输出文件source.o链接为可执行文件exec</td>
+</tr>
+<tr>
+<td>-E</td>
+<td>仅作预处理并直接显示，不进行编译、汇编和链接</td>
+<td>[e.g.1]<em>gcc -E source.c -o preproc.i</em>将源文件source.c预处理结果输出到preproc.i文件[e.g.2]<em>gcc -E source.c &gt; preproc.txt</em>将source.c预处理结果重定向到preproc.txt文件注：”gcc -E”也可换为”cpp”(C preprocessor)</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>预处理和编译到汇编语言(自动生成.s文件)，不进行汇编和链接</td>
+<td>[e.g.1]<em>gcc -S source.c</em>将源文件source.c汇编成source.s文件[e.g.2]<em>gcc -S preproc.i</em>将预处理输出文件preproc.i汇编成preproc.s文件</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>仅作预处理、编译和汇编并生成目标文件(与源文件同名但后缀为.o)，不进行链接</td>
+<td>[e.g.1]<em>gcc -c source.s</em>将汇编输出文件source.s编译输出source.o文件[e.g.2]<em>gcc -c source.c -o target.o</em>编译源文件source.c并将目标文件更名为target.o</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>产生带调试信息的编译后目标代码，供调试器(如gdb使用)</td>
+<td>默认产生gdb所用的调试信息，可用-gformat指定要生成的调试信息格式以供其他平台其他调试器使用[e.g.1]<em>gcc -g source.c</em>将源文件编译为带调试信息的目标文件a.out</td>
+</tr>
+<tr>
+<td>-o <outfile></outfile></td>
+<td>指定输出文件的文件名</td>
+<td>[e.g.1]<em>gcc -o source.exe source.c</em>[e.g.2]<em>gcc -o source.asm source.c</em></td>
+</tr>
+<tr>
+<td>-s</td>
+<td>剥除可执行文件中的符号表和重定位信息</td>
+<td>用于减小可执行文件的大小</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>预处理时不删除注释信息</td>
+<td>配合-E选项使用</td>
+</tr>
+<tr>
+<td>-O</td>
+<td>使用编译优化级别1编译程序。O后还可附带其他的数值，表示不同的优化级别。级别越大优化效果越好，但编译时间越长</td>
+<td>-O0：无优化(默认) 。-O和-O1：优化可执行文件大小及执行时间，且不使编译时间明显增加。编译大型程序时会显著增加编译时内存的使用。-O2：包含-O1的优化，并增加无需在目标文件大小和执行速度上进行折衷的优化。编译器不执行循环展开及函数内联，即不进行“空间换时间”的优化。该选项将增加编译时间和目标文件的执行性能。-Os：执行所有不增加目标文件大小的-O2选项，并执行专门减小目标文件大小的优化选项。-O3: 打开所有-O2优化选项并且增加 -finline-functions, -funswitch-loops, -fpredictive-commoning, -fgcse-after-reload和-ftree-vectorize优化选项。[e.g.1]<em>gcc -O1 source.c -o exec</em></td>
+</tr>
+<tr>
+<td>-shared</td>
+<td>生成共享目标文件</td>
+<td>用于建立共享链接库</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>禁止显示任何警告信息</td>
+<td></td>
+</tr>
+<tr>
+<td>-Wall</td>
+<td>显示全部警告信息</td>
+<td></td>
+</tr>
+<tr>
+<td>-Wshadow</td>
+<td>当局部变量遮盖另一局部变量或全局变量时发出警告</td>
+<td>比较有用，建议打开。 -Wall不会打开该项</td>
+</tr>
+<tr>
+<td>-Wpointer-arith</td>
+<td>对函数指针或void *类型的指针进行算术操作时发出警告</td>
+<td>比较有用，建议打开。 -Wall不会打开该项</td>
+</tr>
+<tr>
+<td>-Werror</td>
+<td>把警告当作错误</td>
+<td>出现任何警告就停止</td>
+</tr>
+<tr>
+<td>-Wunreachable-code</td>
+<td>探测到永不执行的代码时发出警告</td>
+<td>比较有用</td>
+</tr>
+<tr>
+<td>-Wredundant-decls</td>
+<td>同一可见域内某定义多次声明时发出警告</td>
+<td>即使这些重复声明有效且毫无差别</td>
+</tr>
+<tr>
+<td>-pedantic</td>
+<td>对不符合 ANSI/ISO C标准且为标准所要求诊断之处发出警告</td>
+<td>该选项可发现部分不符合ANSI/ISO C标准的代码，如C++ style comments are not allowed in ISO C90</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>生成文件关联的信息，包含目标文件所依赖的所有源代码</td>
+<td>[e.g.1]<em>gcc -m source.c</em>与-m类似的有：-mm忽略由#include <file>造成的依赖关系；-md将输出导入到.d的文件里；-mmd忽略由#include <file>造成的依赖关系，并将输出导入到.d的文件里</file></file></td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示链接过程中编译器调用的程序</td>
+<td>gcc编译链接生成执行文件时，自动把该文件代码作为第一个模块链接在可执行程序中</td>
+</tr>
+<tr>
+<td>–help</td>
+<td>显示gcc帮助说明</td>
+<td></td>
+</tr>
+<tr>
+<td>–target-help</td>
+<td>显示目标机器特定命令行选项</td>
+<td></td>
+</tr>
+<tr>
+<td>–version</td>
+<td>显示gcc版本号和版权信息</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/01/14/SpringBoot学习笔记之集成mybatis-plus实现持久化/" class="pre-post btn btn-default" title="SpringBoot学习笔记之集成mybatis-plus实现持久化">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">SpringBoot学习笔记之集成mybatis-plus实现持久化</span>
+        </a>
+    
+    
+        <a href="/2019/01/07/SpringBoot学习笔记之搭建一个简单的SpringWeb项目/" class="next-post btn btn-default" title="SpringBoot学习笔记之搭建一个简单的SpringWeb项目">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">SpringBoot学习笔记之搭建一个简单的SpringWeb项目</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GCC常用命令总结"><span class="toc-text">GCC常用命令总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

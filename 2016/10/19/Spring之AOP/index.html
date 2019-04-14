@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="Spring">
+
+
+    <meta name="description" content="Spring之AOPAOP基础——面向切面编程简而言之，AOP面向切面编程的目的就是保证程序员在不修改源代码的情况下，为系统中业务组件的多个业务方法添加某种通过的过程（但其实底层实现仍然是修改了...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>Spring之AOP | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Spring之AOP">
+            
+	            Spring之AOP
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Spring/">Spring</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Spring/">Spring</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/10/19</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>907</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Spring之AOP"><a href="#Spring之AOP" class="headerlink" title="Spring之AOP"></a>Spring之AOP</h1><h2 id="AOP基础——面向切面编程"><a href="#AOP基础——面向切面编程" class="headerlink" title="AOP基础——面向切面编程"></a>AOP基础——面向切面编程</h2><p>简而言之，AOP面向切面编程的目的就是保证程序员在不修改源代码的情况下，为系统中业务组件的多个业务方法添加某种通过的过程（但其实底层实现仍然是修改了源代码，只是由AOP框架完成，无需手动实现）。</p>
+<p>AOP 的实现方法大致分为两类</p>
+<ol>
+<li>静态AOP代理：在代码编译时期对程序进行修改，实现对目标类的增强，生成静态的AOP代理类。例如AspectJ。</li>
+<li>动态AOP代理：AOP框架在运行阶段动态生成AOP代理（有JDK动态代理和cglib动态生成代理两种方式），以实现对目标的增强。例如SpringAOP。</li>
+</ol>
+<h2 id="AOP的基本概念"><a href="#AOP的基本概念" class="headerlink" title="AOP的基本概念"></a>AOP的基本概念</h2><ul>
+<li>切面（Aspect）：切面是通知和切点的集合，通知和切点共同定义了切面的全部内容（在何处何时完成何种功能）</li>
+<li>通知（Advice）：切面中所定义的通知定义了切面需要实现的功能以及何时使用该功能。Spring定义了以下5种类型的通知<ul>
+<li>前置通知（Before）：在目标方法调用之前执行</li>
+<li>后置通知（After）：在目标方法完成之后执行，此时无需关注方法的输出</li>
+<li>返回通知（After-returning）：在目标方法成功执行之后执行</li>
+<li>异常通知（After-throwing）：在目标方法抛出异常之后执行</li>
+<li>环绕通知（Around）：在调用目标方法之前和调用之后执行自定义的行为</li>
+</ul>
+</li>
+<li>连接点（Join Point）：连接点是应用执行过程种能够插入切面的一个点，切面代码可以利用这些点插入到应用的正常流程种，并添加新的行为。这个连接点可以是调用方法时，抛出异常时，甚至修改一个字段时</li>
+<li>切点（Pointcut）：切点匹配通知所要织入的一个或多个连接点，Advice定义了何时执行什么方法，切点就定义了何处执行这个方法</li>
+<li>引入（Introduction）：引入使得我们可以向现有的类添加新方法和属性</li>
+<li>织入（Weaving）：织入是把切面应用到目标对象并创建新的代理对象的过程，在目标对象的生命周期里有多个点可以进行织入<ul>
+<li>编译期：切面在目标类编译时被织入，此时需要特殊的编译器。</li>
+<li>类加载器：切面在目标类加载到JVM时被织入。这种方式需要特殊的类加载器，他可以在目标类在引入应用前增强该目标类的字节码。Aspect5的加载时织入使用的就是这种方式</li>
+<li>运行期：切面在运行时的某个时刻被织入。一般情况在，在织入切面时，AOP容器会为目标对象动态地创建一个代理对象。SpringAOP使用的就是这种方式进行织入</li>
+</ul>
+</li>
+</ul>
+<h2 id="xml配置方式实现SpringAOP"><a href="#xml配置方式实现SpringAOP" class="headerlink" title="xml配置方式实现SpringAOP"></a>xml配置方式实现SpringAOP</h2><p>xml文件配置如下：</p>
+<p><code>beans.xml</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xmlns:context=<span class="string">"http://www.springframework.org/schema/context"</span></span><br><span class="line">       xmlns:aop=<span class="string">"http://www.springframework.org/schema/aop"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/context</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/context/spring-context.xsd</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/aop</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/aop/spring-aop.xsd"</span>&gt;</span><br><span class="line">    &lt;context:component-scan base-<span class="keyword">package</span>=<span class="string">"beans,aop"</span>/&gt;</span><br><span class="line">    &lt;aop:aspectj-autoproxy proxy-target-<span class="class"><span class="keyword">class</span></span>=<span class="string">"true"</span>/&gt;</span><br><span class="line">    &lt;aop:config&gt;</span><br><span class="line">        &lt;aop:pointcut id=<span class="string">"journalPoint"</span> expression=<span class="string">"execution(* beans.teachers.*.*(int,String)) and args(num,str)"</span>/&gt;</span><br><span class="line">        &lt;aop:aspect id=<span class="string">"journalAspect"</span> ref=<span class="string">"teacherJournal"</span>&gt;</span><br><span class="line">            &lt;aop:before method=<span class="string">"afterRun"</span> pointcut-ref=<span class="string">"journalPoint"</span> arg-names=<span class="string">"num,str"</span>/&gt;</span><br><span class="line">        &lt;/aop:aspect&gt;</span><br><span class="line">    &lt;/aop:config&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p><code>TeacherJournal.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> aop;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TeacherJournal</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*@After("execution(* beans.teachers.*.*(int,String)) &amp;&amp; args(num,str)")*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterRun</span><span class="params">(<span class="keyword">int</span> num,String str)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"after run!"</span>);</span><br><span class="line">        System.out.println(<span class="string">"num:"</span>+num+<span class="string">"string:"</span>+str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单的切面配置如上，测试类省略</p>
+<h2 id="注解配置方式实现SpringAOP"><a href="#注解配置方式实现SpringAOP" class="headerlink" title="注解配置方式实现SpringAOP"></a>注解配置方式实现SpringAOP</h2><p><code>beans.xml</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xmlns:context=<span class="string">"http://www.springframework.org/schema/context"</span></span><br><span class="line">       xmlns:aop=<span class="string">"http://www.springframework.org/schema/aop"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/context</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/context/spring-context.xsd</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/aop</span></span><br><span class="line"><span class="string">       http://www.springframework.org/schema/aop/spring-aop.xsd"</span>&gt;</span><br><span class="line">    &lt;context:component-scan base-<span class="keyword">package</span>=<span class="string">"beans,aop"</span>/&gt;</span><br><span class="line">    &lt;aop:aspectj-autoproxy proxy-target-<span class="class"><span class="keyword">class</span></span>=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p><code>TeacherJournal.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> aop;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.After;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TeacherJournal</span> </span>&#123;</span><br><span class="line">    <span class="meta">@After</span>(<span class="string">"execution(* beans.teachers.*.*(int,String)) &amp;&amp; args(num,str)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterRun</span><span class="params">(<span class="keyword">int</span> num,String str)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"after run!"</span>);</span><br><span class="line">        System.out.println(<span class="string">"num:"</span>+num+<span class="string">"string:"</span>+str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注解方式无需在配置文件中配置大量复杂的属性，只需要通过简单的注解即可实现AOP</p>
+<p>需要注意的是使用<code>@Aspect</code>和<code>@After</code>注解需要aspectjrt，aspectjweaver两个jar包的支持，因为Spring是借鉴了AspectJ的注解方法，但实现使用的依然是SpringAOP的实现方式</p>
+<h2 id="处理通知中的参数"><a href="#处理通知中的参数" class="headerlink" title="处理通知中的参数"></a>处理通知中的参数</h2><p>在以上两中配置方式的实例中，已经实现了通知参数的传递</p>
+<ul>
+<li>在使用注解方式中，只需要在接收的方法中定义接收参数的类型，然后在表达式后加上<code>&amp;&amp;args(参数名)</code>的形式即可，参数名不需要非要和切点方法中的参数名保持一致</li>
+<li>在使用xml配置方式中，实现的方法和注解方式基本一样，只是由于&amp;在xml中有其他含义，所以将<code>&amp;&amp;</code>替换为<code>and</code>语句即可</li>
+</ul>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2016/10/23/docker简单使用/" class="pre-post btn btn-default" title="docker简单使用">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">docker简单使用</span>
+        </a>
+    
+    
+        <a href="/2016/10/16/Spring之IOC/" class="next-post btn btn-default" title="Spring之IOC">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Spring之IOC</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring之AOP"><span class="toc-text">Spring之AOP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AOP基础——面向切面编程"><span class="toc-text">AOP基础——面向切面编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOP的基本概念"><span class="toc-text">AOP的基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xml配置方式实现SpringAOP"><span class="toc-text">xml配置方式实现SpringAOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注解配置方式实现SpringAOP"><span class="toc-text">注解配置方式实现SpringAOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#处理通知中的参数"><span class="toc-text">处理通知中的参数</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

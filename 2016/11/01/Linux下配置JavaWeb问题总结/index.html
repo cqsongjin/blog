@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="Linux">
+
+
+    <meta name="description" content="Linux下配置JavaWeb问题总结配置Apache HTTP服务器安装和配置使用系统：debian8.3
+直接使用aptitude命令安装
+1aptitude install apache2...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>Linux下配置JavaWeb运行环境问题总结 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Linux下配置JavaWeb运行环境问题总结">
+            
+	            Linux下配置JavaWeb运行环境问题总结
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Linux/">Linux</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Linux/">Linux</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/11/01</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>894</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Linux下配置JavaWeb问题总结"><a href="#Linux下配置JavaWeb问题总结" class="headerlink" title="Linux下配置JavaWeb问题总结"></a>Linux下配置JavaWeb问题总结</h1><h2 id="配置Apache-HTTP服务器"><a href="#配置Apache-HTTP服务器" class="headerlink" title="配置Apache HTTP服务器"></a>配置Apache HTTP服务器</h2><h3 id="安装和配置"><a href="#安装和配置" class="headerlink" title="安装和配置"></a>安装和配置</h3><p>使用系统：debian8.3</p>
+<p>直接使用aptitude命令安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aptitude install apache2</span><br></pre></td></tr></table></figure>
+<p>启动、停止、重启相关命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="配置二级域名"><a href="#配置二级域名" class="headerlink" title="配置二级域名"></a>配置二级域名</h3><p>有时候需要创建二级域名并绑定到新的网站上，此时就需要在云解析上配置二级域名并映射到主机ip地址上，然后通过apache服务器对域名进行解析并转到相应的站点上。</p>
+<p>步骤如下</p>
+<ol>
+<li><p>建立二级域名A记录</p>
+<p>你的域名解析服务器上添加一条”*”的A记录，主机记录（即子域名）为子域名称，例如填入abc，则二级域名为abc.主域名.com，并把域名映射到主机上</p>
+</li>
+<li><p>创建site配置文件</p>
+<p>在/etc/apache2/sites-available目录下建一个新的site文件后缀名为.conf才能被apache识别，添加如下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerAdmin mailName@gmail.com</span><br><span class="line">    ServerName abc.cqsong.cn    &lt;!-- 填入二级域名 --&gt;</span><br><span class="line">    DocumentRoot /var/www/html/    &lt;!-- 网站根目录 --&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>激活site文件，使用<code>a2ensite</code>命令激活</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a2ensite abc.conf   //后为文件名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行reload操作，使配置文件生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service apache2 reload</span><br><span class="line">service apache2 restart</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在虚拟机中模拟路由可以使用修改hosts文件来实现域名和主机ip地址映射。</p>
+<h3 id="莫名其妙的中文路径乱码问题"><a href="#莫名其妙的中文路径乱码问题" class="headerlink" title="莫名其妙的中文路径乱码问题"></a>莫名其妙的中文路径乱码问题</h3><p>经过排查，是从windows中拷贝到Linux环境时，文件夹名和文件名的编码问题引起的，在windows中，中文默认编码使用的是GBK编码，而在Linux中，使用的是UTF-8编码。所以在文件拷贝之后，实际上在Linux中是乱码的形式，需要对文件夹名和文件名进行转码。使用的方式是convmv命令方式。</p>
+<p>通过aptitude命令下载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aptitude install convmv</span><br></pre></td></tr></table></figure>
+<p>aptitude使用方式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">convmv -f 源编码 -t 新编码 [选项] 文件名</span><br></pre></td></tr></table></figure>
+<p>常用参数：</p>
+<ul>
+<li>-r 递归处理子文件夹</li>
+<li>–notest 真正进行操作，请注意在默认情况下是不对文件进行真实操作的，而只是试验。</li>
+<li>–list 显示所有支持的编码</li>
+<li>–unescap 可以做一下转义，比如把%20变成空格</li>
+</ul>
+<p>修改windows到Linux文件名乱码命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">convmv -r  -f gbk -t en_US.utf-8 --notest --nosmart html/</span><br></pre></td></tr></table></figure>
+<h2 id="Tomcat相关"><a href="#Tomcat相关" class="headerlink" title="Tomcat相关"></a>Tomcat相关</h2><h3 id="tomcat启动延迟甚至卡住"><a href="#tomcat启动延迟甚至卡住" class="headerlink" title="tomcat启动延迟甚至卡住"></a>tomcat启动延迟甚至卡住</h3><p> 找到jdk1.x.x_xx/jre/lib/security/<a href="http://lib.csdn.net/base/javaee" target="_blank" rel="noopener">Java</a>.security文件，在文件中找到securerandom.source这个设置项，将其改为：</p>
+<p>securerandom.source=file:/dev/./urandom</p>
+<blockquote>
+<p>linux或者部分unix系统提供随机数设备是/dev/random 和/dev/urandom ，两个有区别，urandom安全性没有random高，但random需要时间间隔生成随机数。jdk默认调用random。</p>
+</blockquote>
+<h2 id="Java相关"><a href="#Java相关" class="headerlink" title="Java相关"></a>Java相关</h2><h3 id="Java环境变量的问题"><a href="#Java环境变量的问题" class="headerlink" title="Java环境变量的问题"></a>Java环境变量的问题</h3><p>编辑<code>/etc/profile</code>文件，在最后添加如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> JAVA_HOME=/usr/song/java8</span><br><span class="line"><span class="keyword">export</span> PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH</span><br><span class="line"><span class="keyword">export</span> CLASSPATH=$CLASSPATH:.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib</span><br></pre></td></tr></table></figure>
+<p>保存退出，执行如下命令使环境变量立即生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source  /etc/profile</span><br></pre></td></tr></table></figure>
+<h2 id="Nginx相关"><a href="#Nginx相关" class="headerlink" title="Nginx相关"></a>Nginx相关</h2><h3 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h3><p>使用apt-get命令直接安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install nginx</span><br></pre></td></tr></table></figure>
+<h3 id="配置文件说明"><a href="#配置文件说明" class="headerlink" title="配置文件说明"></a>配置文件说明</h3><p>主配置文件为<code>/etc/nginx/nginx.conf</code>，一般不作修改，对于配置反向代理和配置HTTP服务器只需要编辑<code>/etc/nginx/sites-available/default</code>文件即可，文件详情如下</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment"># You should look at the following URL's in order to grasp a solid understanding</span></span><br><span class="line"><span class="comment"># of Nginx configuration files in order to fully unleash the power of Nginx.</span></span><br><span class="line"><span class="comment"># http://wiki.nginx.org/Pitfalls</span></span><br><span class="line"><span class="comment"># http://wiki.nginx.org/QuickStart</span></span><br><span class="line"><span class="comment"># http://wiki.nginx.org/Configuration</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Generally, you will want to move this file somewhere, and start with a clean</span></span><br><span class="line"><span class="comment"># file but keep this around for reference. Or just disable in sites-enabled.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Default server configuration</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">	<span class="attribute">listen</span> <span class="number">80</span> default_server;</span><br><span class="line">	<span class="attribute">listen</span> [::]:<span class="number">80</span> default_server;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># SSL configuration</span></span><br><span class="line">	<span class="comment">#</span></span><br><span class="line">	<span class="comment"># listen 443 ssl default_server;</span></span><br><span class="line">	<span class="comment"># listen [::]:443 ssl default_server;</span></span><br><span class="line">	<span class="comment">#</span></span><br><span class="line">	<span class="comment"># Self signed certs generated by the ssl-cert package</span></span><br><span class="line">	<span class="comment"># Don't use them in a production server!</span></span><br><span class="line">	<span class="comment">#</span></span><br><span class="line">	<span class="comment"># include snippets/snakeoil.conf;</span></span><br><span class="line"></span><br><span class="line">	<span class="attribute">root</span> /var/www/html;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Add index.php to the list if you are using PHP</span></span><br><span class="line">	<span class="attribute">index</span> index.html index.htm index.nginx-debian.html;</span><br><span class="line"></span><br><span class="line">	<span class="attribute">server_name</span> _;</span><br><span class="line"></span><br><span class="line">	<span class="attribute">location</span> / &#123;</span><br><span class="line"> 		<span class="comment"># First attempt to serve request as file, then</span></span><br><span class="line">		<span class="comment"># as directory, then fall back to displaying a 404.</span></span><br><span class="line">		<span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ =<span class="number">404</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span></span><br><span class="line">	<span class="comment">#</span></span><br><span class="line">	<span class="comment">#location ~ \.php$ &#123;</span></span><br><span class="line">	<span class="comment">#	include snippets/fastcgi-php.conf;</span></span><br><span class="line">	<span class="comment">#</span></span><br><span class="line">	<span class="comment">#	# With php5-cgi alone:</span></span><br><span class="line">	<span class="comment">#	fastcgi_pass 127.0.0.1:9000;</span></span><br><span class="line">	<span class="comment">#	# With php5-fpm:</span></span><br><span class="line">	<span class="comment">#	fastcgi_pass unix:/var/run/php5-fpm.sock;</span></span><br><span class="line">	<span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># deny access to .htaccess files, if Apache's document root</span></span><br><span class="line">	<span class="comment"># concurs with nginx's one</span></span><br><span class="line">	<span class="comment">#</span></span><br><span class="line">	<span class="comment">#location ~ /\.ht &#123;</span></span><br><span class="line">	<span class="comment">#	deny all;</span></span><br><span class="line">	<span class="comment">#&#125;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Virtual Host configuration for example.com</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># You can move that to a different file under sites-available/ and symlink that</span></span><br><span class="line"><span class="comment"># to sites-enabled/ to enable it.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#server &#123;</span></span><br><span class="line"><span class="comment">#	listen 80;</span></span><br><span class="line"><span class="comment">#	listen [::]:80;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#	server_name example.com;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#	root /var/www/example.com;</span></span><br><span class="line"><span class="comment">#	index index.html;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#	location / &#123;</span></span><br><span class="line"><span class="comment">#		try_files $uri $uri/ =404;</span></span><br><span class="line"><span class="comment">#	&#125;</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"><span class="comment"># 配置二级域名，用于博客搭建</span></span><br><span class="line">server</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">	<span class="attribute">server_name</span> blog.cqsongjin.cn;</span><br><span class="line">	<span class="attribute">index</span> index.jsp index.html;</span><br><span class="line">	<span class="attribute">root</span> /var/www/html/blog/;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 配置二级域名，并整合tomcat实现反向代理</span></span><br><span class="line">server</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">	<span class="attribute">server_name</span> projects.cqsongjin.cn;</span><br><span class="line">	<span class="attribute">index</span> index.jsp index.html;</span><br><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">	<span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Origin'</span> <span class="string">'*'</span>;</span><br><span class="line">	<span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Credentials'</span> <span class="string">'true'</span>;</span><br><span class="line">	<span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Methods'</span> <span class="string">'GET,POST'</span>;</span><br><span class="line">	<span class="attribute">index</span> index.jsp;</span><br><span class="line">	<span class="attribute">proxy_pass</span> http://projects.cqsongjin.cn:8080;</span><br><span class="line">	<span class="comment"># proxy_set_header  X-Real-IP $remote_addr;</span></span><br><span class="line">	<span class="comment"># proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Nginx实现动静态资源分离"><a href="#Nginx实现动静态资源分离" class="headerlink" title="Nginx实现动静态资源分离"></a>Nginx实现动静态资源分离</h3><h2 id="Ajax相关"><a href="#Ajax相关" class="headerlink" title="Ajax相关"></a>Ajax相关</h2><h3 id="Ajax跨域请求问题"><a href="#Ajax跨域请求问题" class="headerlink" title="Ajax跨域请求问题"></a>Ajax跨域请求问题</h3><h4 id="添加头文件方式解决"><a href="#添加头文件方式解决" class="headerlink" title="添加头文件方式解决"></a>添加头文件方式解决</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resp.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">resp.setHeader(<span class="string">"Access-Control-Allow-Credentials"</span> ,<span class="string">"true"</span>);</span><br><span class="line">resp.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>,<span class="string">"GET,POST"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="Mysql相关"><a href="#Mysql相关" class="headerlink" title="Mysql相关"></a>Mysql相关</h2><h3 id="中文乱码"><a href="#中文乱码" class="headerlink" title="中文乱码"></a>中文乱码</h3><p>将中文插入到数据库乱码是因为没有将数据库编码设置为支持中文的编码，mysql的默认编码是Latin1，不支持中文，应该设置为utf8查看自己的数据库编码是否已设置好，进入数据库，输入：show variables like “char%”</p>
+<p><strong>在windows系统下</strong></p>
+<ol>
+<li>在mysql的安装目录下找到my.ini文件(如果没有的话就把my-medium.ini复制，然后重命名为my.ini即可)</li>
+<li>在my.ini文件中找到[client]和[mysqld]字段，在下面均加上default-character-set=utf8，保存并关闭</li>
+<li>重启mysql服务</li>
+</ol>
+<p><strong>在Linux系统下</strong></p>
+<ol>
+<li>打开配置文件，我使用的linux版本是ubuntu，配置文件在/etc/mysql/my.cnf</li>
+<li>在[client]和[mysqld]字段下面均添加default-character-set=utf8，保存并关闭</li>
+<li>重启mysql服务</li>
+</ol>
+<p>如果在linux下重启mysql服务的时候出现Job failed to start，在window下重启失败，这是因为你安装了高版本的mysql(mysql5.5以上)，在高版本对字符编码方式修改的办法中，在[mysqld]下的修改发生了变化，正确方式如下：</p>
+<p>[mysqld]下添加的应该为：</p>
+<p>character-set-server=utf8</p>
+<p>collation-server=utf8_general_ci</p>
+<p>重启mysql，现在再次查看字符编码。</p>
+<h2 id="maven安装"><a href="#maven安装" class="headerlink" title="maven安装"></a>maven安装</h2><h3 id="环境变量配置"><a href="#环境变量配置" class="headerlink" title="环境变量配置"></a>环境变量配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/java</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib:$&#123;CLASSPATH&#125;</span><br><span class="line">export M2_HOME=/usr/lib/maven/maven</span><br><span class="line">export MAVEN_OPTS="-Xmx1024M -XX:MaxPermSize=512m"</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$&#123;JRE_HOME&#125;/bin:$&#123;M2_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2016/11/07/JavaWeb基础知识点总结/" class="pre-post btn btn-default" title="JavaWeb基础知识点总结">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">JavaWeb基础知识点总结</span>
+        </a>
+    
+    
+        <a href="/2016/10/23/docker简单使用/" class="next-post btn btn-default" title="docker简单使用">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">docker简单使用</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux下配置JavaWeb问题总结"><span class="toc-text">Linux下配置JavaWeb问题总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置Apache-HTTP服务器"><span class="toc-text">配置Apache HTTP服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装和配置"><span class="toc-text">安装和配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置二级域名"><span class="toc-text">配置二级域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#莫名其妙的中文路径乱码问题"><span class="toc-text">莫名其妙的中文路径乱码问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat相关"><span class="toc-text">Tomcat相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tomcat启动延迟甚至卡住"><span class="toc-text">tomcat启动延迟甚至卡住</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java相关"><span class="toc-text">Java相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java环境变量的问题"><span class="toc-text">Java环境变量的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx相关"><span class="toc-text">Nginx相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Nginx"><span class="toc-text">安装Nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置文件说明"><span class="toc-text">配置文件说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx实现动静态资源分离"><span class="toc-text">Nginx实现动静态资源分离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax相关"><span class="toc-text">Ajax相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ajax跨域请求问题"><span class="toc-text">Ajax跨域请求问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加头文件方式解决"><span class="toc-text">添加头文件方式解决</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql相关"><span class="toc-text">Mysql相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#中文乱码"><span class="toc-text">中文乱码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#maven安装"><span class="toc-text">maven安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境变量配置"><span class="toc-text">环境变量配置</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

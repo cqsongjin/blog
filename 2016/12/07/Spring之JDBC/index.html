@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.cqsongjin.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="Spring,JDBC">
+
+
+    <meta name="description" content="Spring之JDBC简述针对繁琐的JDBC数据库连接配置（需要手动处理大量的异常和打开关闭各种流，例如connection，statement，resultset等）。Spring提供了一组数...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>Spring之JDBC | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="John Doe">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://blog.cqsongjin.com">Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/关于/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Spring之JDBC">
+            
+	            Spring之JDBC
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Spring/">Spring</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/JDBC/">JDBC</a> <a class="tag-link" href="/tags/Spring/">Spring</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/12/07</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>858</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Spring之JDBC"><a href="#Spring之JDBC" class="headerlink" title="Spring之JDBC"></a>Spring之JDBC</h1><h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>针对繁琐的JDBC数据库连接配置（需要手动处理大量的异常和打开关闭各种流，例如connection，statement，resultset等）。Spring提供了一组数据访问框架，来消除持久化代码中那些枯燥的数据访问逻辑。Spring集成了多种数据访问技术，可以整合JDBC或者其他ORM框架，此处主要介绍基于JDBC的数据库访问方式。</p>
+<p>补充：直接使用原生jdbc方式流程如下（以mysql为例）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String URL = <span class="string">"jdbc:mysql://localhost:3306/baron"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String USERNAME = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"songjin"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Connection connection = <span class="keyword">null</span>;</span><br><span class="line">        Statement statement = <span class="keyword">null</span>;</span><br><span class="line">        ResultSet resultSet = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">            connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);</span><br><span class="line">            statement = connection.createStatement();</span><br><span class="line">            resultSet = statement.executeQuery(<span class="string">"SELECT * FROM filerecord"</span>);</span><br><span class="line">            <span class="keyword">while</span> (resultSet.next())&#123;</span><br><span class="line">                System.out.println(<span class="string">"id---&gt;"</span> + resultSet.getInt(<span class="number">1</span>));</span><br><span class="line">                System.out.println(<span class="string">"md5---&gt;"</span> + resultSet.getString(<span class="number">2</span>));</span><br><span class="line">                System.out.println(<span class="string">"filename---&gt;"</span> + resultSet.getString(<span class="number">3</span>));</span><br><span class="line">                System.out.println(<span class="string">"path---&gt;"</span> + resultSet.getString(<span class="number">4</span>));</span><br><span class="line">                System.out.println(<span class="string">"-----------------------------------------------"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (resultSet != <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    resultSet.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (statement != <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    statement.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (connection != <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    connection.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="关键类库"><a href="#关键类库" class="headerlink" title="关键类库"></a>关键类库</h2><p>使用Spring的JDBC框架，需要导入的包有：</p>
+<ol>
+<li>JDBC连接的jar包，以mysql为例，导入mysql-connector-java相应的包</li>
+<li>导入Spring-JDBC相关的框架包org.springframework.jdbc包</li>
+</ol>
+<h2 id="简单上手"><a href="#简单上手" class="headerlink" title="简单上手"></a>简单上手</h2><h3 id="配置数据源"><a href="#配置数据源" class="headerlink" title="配置数据源"></a>配置数据源</h3><p>使用Spring的JDBC框架很简单，只需要为其注入一个数据源即可，Spring允许使用JNDI数据源、各种数据源连接池（例如dbcp、c3p0、BoneCP等）以及基于JDBC驱动的数据源。</p>
+<p>以dbcp2数据连接池为例，简单配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp2.BasicDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:driverClassName</span>=<span class="string">"com.mysql.jdbc.Driver"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:url</span>=<span class="string">"jdbc:mysql://localhost:3306/baron"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:username</span>=<span class="string">"root"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:password</span>=<span class="string">"password"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置JDBC模板"><a href="#配置JDBC模板" class="headerlink" title="配置JDBC模板"></a>配置JDBC模板</h3><p>Spring提供了三个JDBC模板：</p>
+<ol>
+<li>JdbcTemplate：最基本的SpringJDBC模板，支持简单的JDBC数据库访问功能以及基于索引参数的查询</li>
+<li>NamedParameterJdbcTemplate：使用此模板执行查询时可以将值以命名参数的形式绑定到SQL中，而不是使用简单的索引参数</li>
+<li>SimpleJdbcTemplate：该模板利用Java5的一些新特性例如自动装箱、泛型、以及可变参数列表来简化JDBC模板的使用（这种模板已经废弃，其特性全部转移到了JdbcTemplate中）</li>
+</ol>
+<p>接下来把dataSource注入到模板中，配置如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jdbcTemplate"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.core.JdbcTemplate"</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">c:dataSource-ref</span>=<span class="string">"dataSource"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通过构造器注入到JdbcTemplate中。</p>
+<h3 id="使用JdbcTemplate查询数据"><a href="#使用JdbcTemplate查询数据" class="headerlink" title="使用JdbcTemplate查询数据"></a>使用JdbcTemplate查询数据</h3><p>测试代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> model.FileRecord;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.logging.Log;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.logging.LogFactory;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.ContextConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@ContextConfiguration</span>(locations = &#123;<span class="string">"classpath:conf/beans.xml"</span>&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringJdbc</span> </span>&#123;</span><br><span class="line">    Log log = LogFactory.getLog(SpringJdbc.class);</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> JdbcTemplate <span class="title">getJdbcTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jdbcTemplate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setJdbcTemplate</span><span class="params">(JdbcTemplate jdbcTemplate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.jdbcTemplate = jdbcTemplate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//查询一行数据</span></span><br><span class="line">        FileRecord fileRecord = jdbcTemplate.queryForObject(<span class="string">"select * from filerecord where id = ?"</span>,(rs,rouNum) -&gt; <span class="keyword">new</span> FileRecord(rs.getLong(<span class="number">1</span>),rs.getString(<span class="number">2</span>),rs.getString(<span class="number">3</span>),rs.getString(<span class="number">4</span>)),<span class="number">7</span>);</span><br><span class="line">        log.debug(fileRecord);</span><br><span class="line">        <span class="comment">//查询多组数据，每一组数据为一个</span></span><br><span class="line">        List&lt;Map&lt;String,Object&gt;&gt; list = jdbcTemplate.queryForList(<span class="string">"SELECT * FROM filerecord"</span>);</span><br><span class="line">        list.forEach(x -&gt; System.out.println(x));</span><br><span class="line">        <span class="comment">//查询多组数据，但每组只有一列数据</span></span><br><span class="line">        List&lt;String&gt; list1 = jdbcTemplate.queryForList(<span class="string">"SELECT filename FROM filerecord"</span>,String.class);</span><br><span class="line">        list1.forEach(x -&gt; System.out.println(x));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="queryForObject"><a href="#queryForObject" class="headerlink" title="queryForObject"></a>queryForObject</h4><p>方法其中核心的地方在于lambda表达式的地方</p>
+<p><code>(rs,rouNum) -&gt; new FileRecord(rs.getLong(1),rs.getString(2),rs.getString(3),rs.getString(4)),7)</code></p>
+<p>在这里实际上是实现了一个RowMapper<t>接口，如下所示：</t></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.jdbc.core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RowMapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">T <span class="title">mapRow</span><span class="params">(ResultSet var1, <span class="keyword">int</span> var2)</span> <span class="keyword">throws</span> SQLException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于该接口满足函数式接口的特性，只有一个抽象方法，所以可以使用lambda表达式进行简写，通过实现mapRow（）方法，将获得的ResultSet中的值注入到FileRecord类中。</p>
+<h4 id="queryForList"><a href="#queryForList" class="headerlink" title="queryForList"></a>queryForList</h4><p>该方法有许多的重载，主要可以分为两种，</p>
+<ol>
+<li>获取单列数据（SingleColumn）的List，单列数据需要传入一个class类作为返回的数据类型</li>
+<li>获取多列数据返回的是一个<code>List&lt;Map&lt;String,Object&gt;&gt;</code>类型的数据，其中查询数据的每一行对应一个Map，每个Map中的Key对应列名，Value对应其相应的值</li>
+</ol>
+<h4 id="query"><a href="#query" class="headerlink" title="query"></a>query</h4><p>所有的查询，如上的queryForObject和queryForList，以及例如queryForLong、queryForInt实际上最终都是调用query方法进行查询，具体方法详细可以查看源码或者文档。</p>
+<p>以下介绍一种本人常使用的重载方法，用于实现查询多行数据并自动注入到FileRecord中。</p>
+<p>该方法的api文档描述如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">query</span><span class="params">(String sql,</span></span></span><br><span class="line"><span class="function"><span class="params">                         RowMapper&lt;T&gt; rowMapper,</span></span></span><br><span class="line"><span class="function"><span class="params">                         Object... args)</span></span></span><br><span class="line"><span class="function">                  <span class="keyword">throws</span> DataAccessException</span></span><br><span class="line"><span class="function">Description copied from interface: JdbcOperations</span></span><br><span class="line"><span class="function">Query given SQL to create a prepared statement from SQL and a list of arguments to bind to the query, mapping each row to a Java object via a RowMapper.</span></span><br><span class="line"><span class="function">Specified by:</span></span><br><span class="line"><span class="function">query in interface JdbcOperations</span></span><br><span class="line"><span class="function">Parameters:</span></span><br><span class="line"><span class="function">sql - SQL query to execute</span></span><br><span class="line"><span class="function">rowMapper - object that will map one object per row</span></span><br><span class="line"><span class="function">args - arguments to bind to the <span class="title">query</span> <span class="params">(leaving it to the PreparedStatement to guess the corresponding SQL type)</span></span>; may also contain SqlParameterValue objects which indicate not only the argument value but also the SQL type and optionally the scale</span><br><span class="line">Returns:</span><br><span class="line">the result List, containing mapped objects</span><br><span class="line">Throws:</span><br><span class="line">DataAccessException - <span class="keyword">if</span> the query fails</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;FileRecord&gt; list2 = jdbcTemplate.query(<span class="string">"select * from filerecord"</span>,(rs,rouNum) -&gt; <span class="keyword">new</span> FileRecord(rs.getLong(<span class="number">1</span>),rs.getString(<span class="number">2</span>),rs.getString(<span class="number">3</span>),rs.getString(<span class="number">4</span>)));</span><br><span class="line">list2.forEach(x -&gt; System.out.println(x));</span><br></pre></td></tr></table></figure>
+<p>此处并没有明确声明RowMapper指定泛型的类型，但仍然可以正确返回FileRecord类型的数据，是由于java8 lambda表达式强大的联系上下文推测数据类型的功能。</p>
+<p>如果按照传统的写法将相当繁琐，必须先定义一个实现RowMapper的类，然后再对其实例化，<strong>并不推荐此方法</strong>，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">oldMethod</span><span class="params">()</span></span>&#123;</span><br><span class="line">  List&lt;FileRecord&gt; list2 = jdbcTemplate.query(<span class="string">"select * from filerecord"</span>,<span class="keyword">new</span> FilerecordRowMapper());</span><br><span class="line">  list2.forEach(x -&gt; System.out.println(x));</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilerecordRowMapper</span> <span class="keyword">implements</span> <span class="title">RowMapper</span>&lt;<span class="title">FileRecord</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> FileRecord <span class="title">mapRow</span><span class="params">(ResultSet rs, <span class="keyword">int</span> i)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> FileRecord(rs.getLong(<span class="number">1</span>),rs.getString(<span class="number">2</span>),rs.getString(<span class="number">3</span>),rs.getString(<span class="number">4</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用JdbcTemplate修改数据"><a href="#使用JdbcTemplate修改数据" class="headerlink" title="使用JdbcTemplate修改数据"></a>使用JdbcTemplate修改数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">update</span><span class="params">(String sql,</span></span></span><br><span class="line"><span class="function"><span class="params">                  Object... args)</span></span></span><br><span class="line"><span class="function">           <span class="keyword">throws</span> DataAccessException</span></span><br><span class="line"><span class="function">Description copied from interface: JdbcOperations</span></span><br><span class="line"><span class="function">Issue a single SQL update <span class="title">operation</span> <span class="params">(such as an insert, update or delete statement)</span> via a prepared statement, binding the given arguments.</span></span><br><span class="line"><span class="function">Specified by:</span></span><br><span class="line"><span class="function">update in interface JdbcOperations</span></span><br><span class="line"><span class="function">Parameters:</span></span><br><span class="line"><span class="function">sql - SQL containing bind parameters</span></span><br><span class="line"><span class="function">args - arguments to bind to the <span class="title">query</span> <span class="params">(leaving it to the PreparedStatement to guess the corresponding SQL type)</span></span>; may also contain SqlParameterValue objects which indicate not only the argument value but also the SQL type and optionally the scale</span><br><span class="line">Returns:</span><br><span class="line">the number of rows affected</span><br><span class="line">Throws:</span><br><span class="line">DataAccessException - <span class="keyword">if</span> there is any problem issuing the update</span><br></pre></td></tr></table></figure>
+<p>插入、修改、删除均可使用该方法完成，略。</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">原地址</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/01/09/maven-jetty/" class="pre-post btn btn-default" title="maven使用jetty插件">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">maven使用jetty插件</span>
+        </a>
+    
+    
+        <a href="/2016/11/10/Linux相关/" class="next-post btn btn-default" title="Linux相关">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Linux相关</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring之JDBC"><span class="toc-text">Spring之JDBC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简述"><span class="toc-text">简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键类库"><span class="toc-text">关键类库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单上手"><span class="toc-text">简单上手</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置数据源"><span class="toc-text">配置数据源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置JDBC模板"><span class="toc-text">配置JDBC模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用JdbcTemplate查询数据"><span class="toc-text">使用JdbcTemplate查询数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#queryForObject"><span class="toc-text">queryForObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#queryForList"><span class="toc-text">queryForList</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#query"><span class="toc-text">query</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用JdbcTemplate修改数据"><span class="toc-text">使用JdbcTemplate修改数据</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
